@@ -1,0 +1,17 @@
+﻿# powershell profile
+
+# set the error background to decency
+$pd = (Get-Host).PrivateData
+$pd.ErrorBackgroundColor = "darkblue"
+
+# display path environment variable per line
+function Get-PathPerLine()
+{
+    $env:Path.Split(";")
+}
+Set-Alias path Get-PathPerLine
+
+# add path to environment variable
+$env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
+$env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
+$env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
