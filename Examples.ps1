@@ -51,19 +51,38 @@ $pd.ErrorBackgroundColor = "darkblue"
 # Modify path variable
 $env:Path += ";C:\users\enelson\bin"
 
-# list environment vars:   ls env:
+# list environment vars:   
+ls env:
+cd env:
+ls
+
+ls env: | where Name -eq "path" | select -expand Value
+
+# list paths on separate lines
 ($env:Path).Replace(';',"`n")
 
 # path to the user-specific profile that powershell ATTEMPTS to load
 # you need to create the file yourself
 $profile
 # C:\Users\Eric\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+# Powershell ISE uses a different profile filename
+# C:\Users\Eric\Documents\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1
+
+# list all 4 profile scripts
+$profile | select * 
+
 $user
-$home 
+$home
 
 # To run scripts, need to set execution policy
 get-executionpolicy
 set-executionpolicy remotesigned  # run all local scripts and only remote scripts signed by a trusted source
+
+Get-Location # pwd   current location
+Push-Location # temporarily change directories and back.  alias pushd and popd
+Pop-Location
+
+$PSVersionTable # version of powershell currently running
 
 
 #---------------------------------------------------------------------------------
@@ -80,6 +99,17 @@ get-command -?   # gets help
 get-help (help, man alias)  # gets help page for get-content
 get-help get-content -examples  # examples parameter shows examples of a command
 
+# get-member will tell you what properties and methods are on an object
+Get-Process | Get-Member  # tells you what props and methods are on the object returned by get-process
+
+# help topics documented
+About_Execution_Policies
+About_Operators
+About_Common_Parameters
+About_Pipelines
+About_Scripts
+About_*
+Get-Help About* # lists help topics
 
 #---------------------------------------------------------------------------------
 # variables 
@@ -237,6 +267,8 @@ function myfunc
 
 write-debug # writes debug info 
 
+# whatif parameter can be used to find out what a command will do before actually running it
+
 #---------------------------------------------------------------------------------
 # Working with filesystem / files
 
@@ -285,7 +317,7 @@ $header = "ColumnOne", "ColumnTwo"
 $mycsv = import-csv "my.csv" -header $header
 $mycsv.Count
 
-# load xml from file
+# load xml from file   out-file command
 $myxml | out-file "c:\myfile.xml"
 
 $xml = new-object xml
@@ -302,11 +334,12 @@ $Full = "The sky is " + ${D:\Temp\CoolVariable.txt} + " today."
 # The first dot means "run this in the current context instead of a child context."
 
 
+
 #---------------------------------------------------------------------------------
 # Providers - things we can navigate and get data from
 Get-PSProvider  # shows list of providers available 
                 # filesystem drives, registry, certificates, environment vars, sql server object tree)
-Get-PSDrive
+Get-PSDrive  # lists drives available on system
 
 Set-Location env:  # changes the provider to environment variables
 Get-ChildItem  # list the environment variables
@@ -322,6 +355,39 @@ Get-PSSnapin -Registered
 # .NET Framework access (aka perl module syntax)
 
 [Math]::pow(2,3)  # access Math.Pow()    the :: signifies a static method on the object
+
+# create and use .net objects
+$t = New-Object -typename System.Timers.Timer `
+    -ArgumentList 500  # pass arguments
+
+$t = New-Object -typename System.Timers.Timer `
+    -Property @{   # property argument accepts a hash table of property values
+        Interval=900;
+        AutoReset=$false
+    }
+
+$t = null # destroys object (set for garbage collection)
+
+# reference .net types and access static members
+[System.Environment]::MachineName #static member
+[System.Environment]::GetLogicalDrives() # call static function
+[System.Environment] | Get-Member
+
+
+# reference instance members (dot)
+[AppDomain]:: CurrentDomain.GetAssemblies() # instance method
+
+# you can assign a type reference to a variable and use it to reference later
+$s = [System.Security.Cryptography.SHA1]
+
+
+# load an assembly into powershell session
+Add-Type -AssemblyName System.Drawing # need to load the system.drawing assembly before using it
+Add-Type -Path ./CustomTypes.dll # load your own custom assemblies before using user-defined types
+
+# use import-module for assemblies that contain powershell cmdlets or providers
+Import-Module ./MyCustomtTypes.dll
+
 
 #---------------------------------------------------------------------------------
 # Working with the web
@@ -438,8 +504,18 @@ square(5)  or square 5   # can invoke with or without parens
 
 
 #---------------------------------------------------------------------------------
+# Manage events inside powershell
+Register-ObjectEvent 
+Get-Event
+Set-Event
+Wait-Event
+Remove-Event
+Get-EventSubscriber
 
 
+
+
+#---------------------------------------------------------------------------------
 
 read-host -prompt
 
@@ -447,7 +523,6 @@ read-host -prompt
 
 # powershell building code better than msbuild
 
-# whatif parameter can be used to find out what a command will do before actually running it
 
 
 # Powershell accelerators
@@ -467,6 +542,8 @@ stop-process # kill alias  kill a process
 output data table:
 get-command | group verb | out-gridview  # pops up a grid view dialog box
 
+# get all powershell processes on the system
+get-process | Where-Object {$_.ProcessName -eq "powershell"}
 
 
 the $OFS variable stores default separator  
@@ -510,7 +587,12 @@ get-wmiobject win32_logicaldisk | sort -desc freespace | select -first 3 | forma
 
 
 
+# invoke item is the same thing as clicking on an object.   alias ii
+invoke-item myfile.txt  # same thing as clicking on myfile.txt
+Invoke-Item .  # this opens the current directory in windows explorer   ii .
+# scott hanselman has "powershell prompt here" to get from explorer back to powershell
 
 
+select -expand xyz  # expands a cutoff string in ui
 
 
