@@ -609,3 +609,33 @@ ps | clip
 # transform text output from a program into first-class objects
 # basic idea is to turn the text into a csv file and then convert the csv into objects
 myprogramwithtextoutput | foreach {$_ -replace "\s+",','} | ConvertFrom-Csv -Header Col1,Col2
+
+
+#modules
+module repositories:
+ms technet scriptcenter
+poshcode
+codeplex
+github
+nuget
+psget
+
+pscx - most popular 3rd party module -  grab bag of useful functions
+show-ui - creat wpf user interfaces
+sql psx - sql server and powershell  
+reflection 
+pester - BDD testing
+PSake - build scripting
+studioshell - visual studio automation
+
+get-module # see what modules are loaded
+get-module -listavailable # show what modules are available
+import-module pscx
+remove-module
+
+to install a module (important to use exact modulename)!
+create a directory under documents/windowspowershell/modules/<modulename>
+create a file in the folder named <modulename>.psm1
+paste module code into the file
+verify it is installed using get-module -listavailable
+
