@@ -333,7 +333,8 @@ $Full = "The sky is " + ${D:\Temp\CoolVariable.txt} + " today."
 . .\MyFunctions.ps1
 # The first dot means "run this in the current context instead of a child context."
 
-
+# Create fully qualified path from filename only
+$path = $file | Resolve-Path
 
 #---------------------------------------------------------------------------------
 # Providers - things we can navigate and get data from
@@ -512,6 +513,11 @@ Wait-Event
 Remove-Event
 Get-EventSubscriber
 
+#---------------------------------------------------------------------------------
+# modules - the CPAN for powershell
+
+# microsoft technet script repository
+
 
 
 
@@ -596,3 +602,10 @@ Invoke-Item .  # this opens the current directory in windows explorer   ii .
 select -expand xyz  # expands a cutoff string in ui
 
 
+# to output results to the clipboard, pipe results to clip 
+ps | clip
+
+
+# transform text output from a program into first-class objects
+# basic idea is to turn the text into a csv file and then convert the csv into objects
+myprogramwithtextoutput | foreach {$_ -replace "\s+",','} | ConvertFrom-Csv -Header Col1,Col2
