@@ -639,3 +639,37 @@ create a file in the folder named <modulename>.psm1
 paste module code into the file
 verify it is installed using get-module -listavailable
 
+#builds
+psake  - SAH-kee
+can wrap msbuild with psake (similar to makefiles)
+
+properties {
+	$config = 'debug'  # debug or release
+}
+
+task -name Build -description "builds outdated artifacts" -action {
+	exec {
+		msbuild ./myproject/myproject.sln /t:Build
+	}
+}
+
+task -name Clean -description "cleans" -action {
+	exec {
+		msbuild ./myproject/myproject.sln /t:Clean
+	}
+}
+
+task -name Rebuild -depends Clean,Build -description "rebuild"
+
+task -name default -depends Build;
+
+studioshell - powershell inside visual studio window
+you can traverse visual studio ide object tree like a drive in powershell
+myproject.psm1 project solution module file.  lives next to myproject.sln file
+when visual studio opens a solution file, it automatically runs the psm1 file.
+add entries to visual studio menus
+
+
+
+
+
