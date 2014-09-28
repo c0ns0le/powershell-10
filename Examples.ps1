@@ -704,8 +704,12 @@ unregister-scheduledjob myjob
 
 
 
-#formatting output   csv, xml, tables
-format-table
+#formatting output 
+out-host 
+format-wide -column 4  # 4 columns.  alias fw
+format-table -autosize -wrap
+format-list # alias fl
+
 
 new-pssession
 
