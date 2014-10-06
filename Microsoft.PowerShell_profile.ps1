@@ -16,3 +16,11 @@ $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
 $env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
 $env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
 $env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
+
+# colored prompt
+function Prompt
+{
+    $promptString = "PS " + $(Get-Location) + ">"
+    Write-Host $promptString -NoNewline -ForegroundColor Yellow
+    return " "
+}
