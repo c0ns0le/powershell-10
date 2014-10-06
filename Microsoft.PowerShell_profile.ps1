@@ -15,3 +15,4 @@ Set-Alias path Get-PathPerLine
 $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
 $env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
 $env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
+$env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
