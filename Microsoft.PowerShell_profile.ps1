@@ -9,7 +9,6 @@ function Get-PathPerLine()
 {
     $env:Path.Split(";")
 }
-Set-Alias path Get-PathPerLine
 
 # add path to environment variable
 $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
@@ -24,3 +23,7 @@ function Prompt
     Write-Host $promptString -NoNewline -ForegroundColor Yellow
     return " "
 }
+
+Set-Alias path Get-PathPerLine
+Set-Alias sublime sublime.exe
+Set-Alias npp notepad++.exe
