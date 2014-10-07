@@ -25,5 +25,5 @@ function Prompt
 }
 
 Set-Alias path Get-PathPerLine
-Set-Alias sublime sublime.exe
+Set-Alias sublime sublime_text.exe
 Set-Alias npp notepad++.exe
