@@ -2,7 +2,7 @@
 
 # set the error background to decency
 $pd = (Get-Host).PrivateData
-$pd.ErrorBackgroundColor = "darkblue"
+$pd.ErrorBackgroundColor = "DarkMagenta" #"darkblue"
 
 # display path environment variable per line
 function Get-PathPerLine()
