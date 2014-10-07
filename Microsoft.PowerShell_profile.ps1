@@ -1,5 +1,7 @@
 ﻿# powershell profile
 
+Set-ExecutionPolicy RemoteSigned
+
 # set the error background to decency
 $pd = (Get-Host).PrivateData
 $pd.ErrorBackgroundColor = "DarkMagenta" #"darkblue"
