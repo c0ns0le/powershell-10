@@ -2,6 +2,9 @@
 
 Set-ExecutionPolicy RemoteSigned
 
+# node and git use black
+(Get-Host).UI.RawUI.BackgroundColor=Black
+
 # set the error background to decency
 $pd = (Get-Host).PrivateData
 $pd.ErrorBackgroundColor = "DarkMagenta" #"darkblue"
