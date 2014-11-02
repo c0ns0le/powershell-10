@@ -713,6 +713,6 @@ format-list # alias fl
 
 new-pssession
 
-
-
+# display colors
+[enum]::GetValues([System.ConsoleColor]) | Foreach-Object {Write-Host $_ -ForegroundColor $_}
 
