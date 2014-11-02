@@ -23,6 +23,8 @@ function Get-PathPerLine()
     $env:Path.Split(";")
 }
 
+$env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
+
 # add path to environment variable
 $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
 $env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
@@ -30,8 +32,7 @@ $env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
 $env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
 $env:Path = $env:Path + ";C:\Program Files\nodejs"
 $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
-
-$env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
+$env:Path = $env:Path + ";" + $env:NODE_PATH
 
 Set-Alias path Get-PathPerLine
 Set-Alias sublime sublime_text.exe
