@@ -31,6 +31,7 @@ $env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
 $env:Path = $env:Path + ";C:\Program Files\nodejs"
 $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
 
+$env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
 
 Set-Alias path Get-PathPerLine
 Set-Alias sublime sublime_text.exe
