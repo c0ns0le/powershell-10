@@ -12,8 +12,8 @@ $host.UI.RawUI.BackgroundColor="Black"
 # colored prompt
 function Prompt
 {
-    $promptString = "PS " + $(Get-Location) + ">"
-    Write-Host $promptString -NoNewline -ForegroundColor White
+    $promptString =  "$pwd`nPS >"
+    Write-Host $promptString -nonewline -ForegroundColor DarkCyan
     return " "
 }
 
