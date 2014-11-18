@@ -17,6 +17,9 @@ F7 displays a window with command history
 copy to clipboard:   highlight text and hit enter or right click 
 copy from clipboard:  right mouse button
 
+to run powershell in administrator mode:
+powershell   ctrl+shft+enter
+
 #>
 
 <#
