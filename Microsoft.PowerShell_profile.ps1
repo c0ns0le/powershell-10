@@ -37,5 +37,5 @@ $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
 $env:Path = $env:Path + ";" + $env:NODE_PATH
 
 Set-Alias path Get-PathPerLine
-Set-Alias sublime sublime_text.exe
+Set-Alias sub sublime_text.exe
 Set-Alias npp notepad++.exe
