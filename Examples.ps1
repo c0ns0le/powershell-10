@@ -297,7 +297,10 @@ Remove-Item -Recurse -Force some_dir
 Get-ChildItem -Force
 
 # output data to html or excel
-get-process | convertto-html -property processname, cpu, id > c:\users\eric\proc.html    
+# ps = get-process
+ps | convertto-html > ps.html    
+ii ps.html
+
 get-process | export-csv c:\service.csv
 
 # To strip out all blank lines, including those with spaces and tabs, from a text file, we can use:
