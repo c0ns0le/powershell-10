@@ -20,6 +20,9 @@ copy from clipboard:  right mouse button
 to run powershell in administrator mode:
 powershell   ctrl+shft+enter
 
+to pass command to cmd.exe
+cmd /c dir
+
 #>
 
 <#
