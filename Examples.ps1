@@ -221,8 +221,7 @@ $PSVersionTable # version of powershell currently running
 $_  # used to iterate through collection
 $_ # variable is the current value of a variable in a pipeline
 
-$list = 1..4
-$list | foreach{$_ * $_ }
+1..4 | foreach{$_ * $_ }
 
 #---------------------------------------------------------------------------------
 # flow control statements (if, switch, loops)
@@ -264,6 +263,12 @@ foreach ($file in get-childitem)
 foreach ($i in 1..10) { }
 foreach ($i in 10..1) { }
 foreach ($i in 0..($Files.Count-1)) { }
+
+# foreach can run parallel tasks (creates separate threads) and you can throttle threadcount if necessary
+foreach -parallel -ThrottleLimit 50 ($Report in $Reports) 
+{ 
+	Process-Report $Report 
+}
 
 #---------------------------------------------------------------------------------
 # error handling and debugging
