@@ -1,6 +1,7 @@
 # powershell profile
 # ii $profile
 # ise $profile
+# to reload profile . $profile
 
 # Set-ExecutionPolicy RemoteSigned
 
