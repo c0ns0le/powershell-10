@@ -171,6 +171,9 @@ $y = 8
 # regular expressions
 "888-8764" -match "[0-9]{3}-[0-9]{4}"   # returns true
 
+# store variables in files
+${D:\Temp\CoolVariable.txt} = "very blue"
+$Full = "The sky is " + ${D:\Temp\CoolVariable.txt} + " today."
 
 #---------------------------------------------------------------------------------
 # arrays
@@ -742,4 +745,8 @@ new-pssession
 
 # display colors
 [enum]::GetValues([System.ConsoleColor]) | Foreach-Object {Write-Host $_ -ForegroundColor $_}
+
+# use powershell 4
+Get-Service | Where { $_.Status -eq "Running" } | ForEach { $_.DisplayName }  # powershell 2
+(Get-Service | Where Status -eq "Running").DisplayName # powershell 4
 
