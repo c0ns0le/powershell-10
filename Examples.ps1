@@ -47,48 +47,51 @@ native win32 Windows commands.
 # unix commands ls, cat, mv, cp, man, pwd, ps, grep
 
 #---------------------------------------------------------------------------------
-# environment
+# powershell environment
 
-# set the error background 
-$pd = (Get-Host).PrivateData
-$pd.ErrorBackgroundColor = "darkblue"
+# To run scripts, need to set execution policy
+get-executionpolicy
+set-executionpolicy remotesigned  # run all local scripts and only remote scripts signed by a trusted source
 
-# Modify path variable
-$env:Path += ";C:\users\enelson\bin"
+# path to user-specific profile
+# you need to create the file yourself
+# C:\Users\Eric\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+# Powershell ISE uses a different profile filename
+# C:\Users\Eric\Documents\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1
+
+$profile
+ise $profile  # edit profile
+. $profile  # reload profile in current session
+
+# list all 4 profile scripts
+$profile | select * 
+
+# powershell version 
+$PSVersionTable # display powershell version
+
+# be sure to use powershell 4
+Get-Service | Where { $_.Status -eq "Running" } | ForEach { $_.DisplayName }  # powershell 2
+(Get-Service | Where Status -eq "Running").DisplayName # powershell 4
+
+# display colors
+[enum]::GetValues([System.ConsoleColor]) | Foreach-Object {Write-Host $_ -ForegroundColor $_}
+
+# set the error background color
+$host.privatedata.ErrorBackgroundColor = "black"
 
 # list environment vars:   
 ls env:
 cd env:
 ls
 
+# show contents of path variable
 ls env: | where Name -eq "path" | select -expand Value
+
+# Modify path variable
+$env:Path += ";C:\users\enelson\bin"
 
 # list paths on separate lines
 ($env:Path).Replace(';',"`n")
-
-# path to the user-specific profile that powershell ATTEMPTS to load
-# you need to create the file yourself
-$profile
-# C:\Users\Eric\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
-# Powershell ISE uses a different profile filename
-# C:\Users\Eric\Documents\WindowsPowerShell\Microsoft.PowerShellISE_profile.ps1
-
-# list all 4 profile scripts
-$profile | select * 
-
-$user
-$home
-
-# To run scripts, need to set execution policy
-get-executionpolicy
-set-executionpolicy remotesigned  # run all local scripts and only remote scripts signed by a trusted source
-
-Get-Location # pwd   current location
-Push-Location # temporarily change directories and back.  alias pushd and popd
-Pop-Location
-
-$PSVersionTable # version of powershell currently running
-
 
 #---------------------------------------------------------------------------------
 # Help
@@ -283,12 +286,18 @@ write-debug # writes debug info
 #---------------------------------------------------------------------------------
 # filesystem and file io
 
-get-content # alias gc or cat
+get-content  # alias gc or cat
 cat c:/file.txt  # gets the contents of a file
+
+# use set-content (alias sc) to write to file on disk
+# use add-content (alias ac) to append to file on disk
 
 get-location  # alias gl or pwd
 set-location  # alias cd
 cd ~  # go home
+
+Push-Location # temporarily change directories and back.  alias pushd and popd
+Pop-Location
 
 get-childitem # alias ls
 ls | where length -gt 100kb | sort length | ft name, length -AutoSize
@@ -301,46 +310,45 @@ rm -Recurse -Force some_dir
 # ls -al equivalent - show all files plus hidden files
 ls -Force
 
-# output data to html or excel
-# ps = get-process
-ps | convertto-html > ps.html    
-ii ps.html
-
-get-process | export-csv c:\service.csv
-
 # To strip out all blank lines, including those with spaces and tabs, from a text file, we can use:
-( Get-Content $FilePath ) | Where { $_.Trim(" `t" } | Set-Content $FilePath 
-# Or
-(GC $FP)|?{$_.Trim(" `t")}|SC $FP 
+(cat $FilePath) | where { $_.Trim(" `t" } | Set-Content $FilePath 
 # The initial cmd needs parenthesis because we need to finish reading from the file before writing back to it.
 
-# use get-content to assign contents of a file to a variable
-$a = get-content "a.txt"
+# cat contents of a file into a variable
+$a = cat "a.txt"
 # note $a is actually an array
 # if you want one entire string, use join to combine
 $separator = [System.Environment]::NewLine
 $all = [string]::Join($seperator, $a)
 
-# use set-content to write to file on disk
-# use add-content to append to file on disk
+# output data to file by redirect or out-file
+ps > ps.txt
+ps | out-file ps2.txt
 
-# import/export csv files
-get-process | export-csv "myfile.csv"
+# output data to html file
+# ps = get-process
+ps | convertto-html > ps.html    
+ii ps.html
 
+# output data to excel csv file
+ps | export-csv services.csv
+
+# import data from excel csv file
 $header = "ColumnOne", "ColumnTwo"
 $mycsv = import-csv "my.csv" -header $header
 $mycsv.Count
 
-# load xml from file   out-file command
-$myxml | out-file "c:\myfile.xml"
-
+# load xml from file 
 $xml = new-object xml
-$xml.Load("c:\myfile.xml")
+$xml.Load("myfile.xml")
+
+# write xml to file
+$xml | out-file "myfile.xml"
 
 # store a variable in a file:
-${D:\Temp\CoolVariable.txt} = "very blue"
+${C:\Temp\CoolVariable.txt} = "very blue"
 # read it out of a file:
-$Full = "The sky is " + ${D:\Temp\CoolVariable.txt} + " today."
+$full = "The sky is " + ${C:\Temp\CoolVariable.txt} + " today."
 # you can store arrays and hashes, etc
 
 # Save functions in a file.  Then add to current context by:
@@ -734,9 +742,8 @@ format-list # alias fl
 
 new-pssession
 
-# display colors
-[enum]::GetValues([System.ConsoleColor]) | Foreach-Object {Write-Host $_ -ForegroundColor $_}
 
-# use powershell 4
-Get-Service | Where { $_.Status -eq "Running" } | ForEach { $_.DisplayName }  # powershell 2
-(Get-Service | Where Status -eq "Running").DisplayName # powershell 4
+
+
+? is short for where
+% is short for foreach
