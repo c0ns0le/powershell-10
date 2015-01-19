@@ -572,10 +572,11 @@ read-host -prompt
 control    # control panel
 
 get-process # ps alias
-get-process | sort cpu -desc | select -first 10   # top 10 cpu processes
+ps | sort cpu -desc | select -first 10   # top 10 cpu processes
 stop-process # kill alias  kill a process
+(ps|where name -eq chrome).kill()  # kill a set of processes
 
-output data table:
+# output grid view  out-gridview ogv
 get-command | group verb | out-gridview  # pops up a grid view dialog box
 
 # get all powershell processes on the system
