@@ -1,21 +1,14 @@
 #---------------------------------------------------------------------------------
-# powershell general info
+# powershell
 
 <#
-
 powershell.exe
-
-powershell ISE - integrated scripting environment for development
-F5 - run entire script
-F8 - run highlighted snippet of code 
-CTRL D - go to console pane
-CTRL I - go to script pane
-
 window key > “power” 
 from any explorer window:   alt D > “powershell” 
 F7 displays a window with command history
 copy to clipboard:   highlight text and hit enter or right click 
 copy from clipboard:  right mouse button
+use backtick on command line to span multiple lines, enter on empty line executes command
 
 to run powershell in administrator mode:
 powershell   ctrl+shft+enter
@@ -23,16 +16,21 @@ powershell   ctrl+shft+enter
 to pass command to cmd.exe
 cmd /c dir
 
-#>
+powershell_ise.exe - integrated scripting environment for development
+F5 - run entire script
+F8 - run highlighted snippet of code 
+CTRL D - go to console pane
+CTRL I - go to script pane
 
+#>
+#---------------------------------------------------------------------------------
 <#
 Four categories of commands: 
 
 cmdlets - 
     A cmdlet is implemented by a .NET class that derives from the Cmdlet base class in the PowerShell SDK.
-    This category of command is compiled into a DLL and loaded into the PowerShell process
-    always have names of the form Verb-Noun,
-    cmdlets -  Use Verb-Noun form.
+    This category of command is compiled into a DLL and loaded into the PowerShell process.
+    Always have names of the form Verb-Noun,
 
 shell function commands
     function Do-Something { }
@@ -43,6 +41,7 @@ script commands
 native win32 Windows commands.
     group sha -ashashtable -asstring
 #>
+#---------------------------------------------------------------------------------
 
 # aliases
 # unix commands ls, cat, mv, cp, man, pwd, ps, grep
@@ -50,7 +49,7 @@ native win32 Windows commands.
 #---------------------------------------------------------------------------------
 # environment
 
-# set the error background to decency
+# set the error background 
 $pd = (Get-Host).PrivateData
 $pd.ErrorBackgroundColor = "darkblue"
 
@@ -95,16 +94,16 @@ $PSVersionTable # version of powershell currently running
 # Help
 
 get-command # gcm
-get-command -verb "get"
-get-command -noun "service"
+gcm -verb "get"
+gcm -noun "service"
 
-get-help
-get-help get-command
+get-help  # alias gh
+gh get-command
 get-command -?   # gets help
-get-help get-command -online # help in browser
+gh get-command -online # help in browser
 
 get-help (help, man alias)  # gets help page for get-content
-get-help get-content -examples  # examples parameter shows examples of a command
+gh get-content -examples  # examples parameter shows examples of a command
 
 # get-member shows what properties and methods are on an object
 Get-Process | Get-Member  # shows what props and methods are on the object returned by get-process
@@ -176,22 +175,36 @@ ${D:\Temp\CoolVariable.txt} = "very blue"
 $Full = "The sky is " + ${D:\Temp\CoolVariable.txt} + " today."
 
 #---------------------------------------------------------------------------------
+# built-in variables
+
+get-variable # gv returns all variables
+$true
+$false
+$null
+$home
+$host   # version of powershell currently running
+$pid
+$PSVersionTable # version of powershell currently running
+
+$_  # used to iterate through collection
+$_  # the current value of a variable in a pipeline
+1..4 | foreach{$_ * $_ }
+
+#---------------------------------------------------------------------------------
 # arrays
 
 $array = "bill", "george"
 $array[0] = "jill"
-$array
+$array  # display array
 
 $array = @()  # empty array
 $array.Count
 
-$array = 1..9
+$array = 1..10
+$array = 10..1  # backwards
+$array = 1..($count)  # use variable 
 $array -contains 42  # false
-
-$a = @()  # empty array
-$a = 1,2,3,4
-$a = 1..10  # creates an array of 1 to 10
-$a   # prints out the array nicely
+$array = 1,2,3,4
 
 #---------------------------------------------------------------------------------
 # hash (associative array)
@@ -203,31 +216,14 @@ $hash.$mykey
 $hash.Remove("key")
 $hash.Contains("something")
 $hash.ContainsValue("else")
-
-$h = @{}  # empty hash
-$h = @{a=1; b=2}
-$h   # prints table
-$h.a  # or
-$h["a"]  # access value of a
-
-#---------------------------------------------------------------------------------
-# built-in variables
-get-variable # gv returns all variables
-$true
-$false
-$null
-$HOME
-$Host   # version of powershell currently running
-$pid
-$PSVersionTable # version of powershell currently running
-
-$_  # used to iterate through collection
-$_ # variable is the current value of a variable in a pipeline
-
-1..4 | foreach{$_ * $_ }
+$hash = @{}  # empty hash
+$hash = @{a=1; b=2}
+$hash   # display
+$hash.a  # value of a
+$hash["a"]  # value of a
 
 #---------------------------------------------------------------------------------
-# flow control statements (if, switch, loops)
+# flow control (if, switch, loops)
 
 $var = 32
 switch ($var)
@@ -235,7 +231,7 @@ switch ($var)
   12 {"no"}   
   32 {"yes" : break}  # powershell will continue evaluating subsequent conditions unless you specify :break 
   "32" {"without break above this would match too"}
-  default {"def"}
+  default {"default"}
 }
 
 switch -Wildcard ("hello") { }
@@ -245,33 +241,24 @@ while ($i++ -lt 10) { if ($i % 2) {"$i is odd"}}
 
 # do {} while ()
 # do {} until ()
-# for () {}
+# for ($i=0;$i -lt 10; $i++) {}  # use foreach($i in 0..9) instead
 
 $array = 11,12,13
-foreach ($item in $array)
-{
-    $item
-}
+foreach ($item in $array) { $item }
 
 # Foreach-Object (foreach alias)
-foreach ($file in get-childitem)
-{
-    $file.Name
-}
+foreach ($file in get-childitem) { $file.Name }
 
 # percent % is short for foreach
 1..5|%{$_*$_}
 
-# a great way to do something 10 times
+# great way to do something 10 times
 foreach ($i in 1..10) { }
 foreach ($i in 10..1) { }
 foreach ($i in 0..($Files.Count-1)) { }
 
 # foreach can run parallel tasks (creates separate threads) and you can throttle threadcount if necessary
-foreach -parallel -ThrottleLimit 50 ($Report in $Reports) 
-{ 
-	Process-Report $Report 
-}
+foreach -parallel -ThrottleLimit 50 ($Report in $Reports) { Process-Report $Report }
 
 #---------------------------------------------------------------------------------
 # error handling and debugging
@@ -281,10 +268,11 @@ function myfunc
 {
     # func code here
     
-    trap { # a catch statement. catches .net error types
+    trap { 
+        # catch statement catches .net error types
         write-host "oh no an error!"
-        continue # continue to the next line of code after the error if you want
-        break # stops function from running and return to caller instead
+        continue # continue to the next line of code after the error
+        break # stops function and returns to caller instead
     }
 }
 
@@ -293,25 +281,25 @@ write-debug # writes debug info
 # whatif parameter can be used to find out what a command will do before actually running it
 
 #---------------------------------------------------------------------------------
-# Working with filesystem / files
+# filesystem and file io
 
-get-content (cat alias) c:/file.txt  # gets the contents of a file
+get-content # alias gc or cat
+cat c:/file.txt  # gets the contents of a file
 
-Set-Location c:\windows  # cd c:\windows
-Get-ChildItem # ls
+get-location  # alias gl or pwd
+set-location  # alias cd
+cd ~  # go home
 
-get-childitem | 
-    where-object {$_.Length -gt 100kb} | 
-    Sort-Object Length |
-    Format-Table -Property Name, Length -AutoSize
-
-Get-ChildItem | Select-Object Name, Length
+get-childitem # alias ls
+ls | where length -gt 100kb | sort length | ft name, length -AutoSize
+ls | select name, length
 
 # force delete a subtree
-Remove-Item -Recurse -Force some_dir
+remove-item  # alias rm
+rm -Recurse -Force some_dir
 
-# ls -al    show all files plus hidden files
-Get-ChildItem -Force
+# ls -al equivalent - show all files plus hidden files
+ls -Force
 
 # output data to html or excel
 # ps = get-process
@@ -364,26 +352,28 @@ $path = $file | Resolve-Path
 
 #---------------------------------------------------------------------------------
 # Providers - things we can navigate and get data from
-Get-PSProvider  # shows list of providers available 
-                # filesystem drives, registry, certificates, environment vars, sql server object tree)
-Get-PSDrive  # lists drives available on system
 
-Set-Location env:  # changes the provider to environment variables
-Get-ChildItem  # list the environment variables
+get-psprovider  # shows list of providers available 
+                # filesystem drives, registry, certificates, environment vars, sql server object tree
 
-Set-Location alias:  # changes the provider to aliases
-Get-ChildItem  # list the available aliases
+get-psdrive  # lists drives available on system
+
+cd env:  # changes the provider to environment variables
+ls  # list the environment variables
+
+cd alias:  # changes the provider to aliases
+ls  # list the available aliases
 
 # Add new providers via snap-ins
 Get-PSSnapin
 Get-PSSnapin -Registered
 
 #---------------------------------------------------------------------------------
-# .NET Framework access (aka perl module syntax)
+# .NET Framework access (perl module syntax)
 
-# [math] is actually System.Math class
-[Math]::pow(2,3)  # access Math.Pow()    the :: signifies a static method on the object
-[math].GetMethods() | Select -Property Name -Unique # get list of methods on math class
+# [math] refers to System.Math class
+[Math]::pow(2,3)  # access Math.Pow()    the :: signifies a static method on the class
+[math].getmethods() | select name -Unique  # get list of methods on math class
 [math]::e
 [math]::pi
 
@@ -750,4 +740,3 @@ new-pssession
 # use powershell 4
 Get-Service | Where { $_.Status -eq "Running" } | ForEach { $_.DisplayName }  # powershell 2
 (Get-Service | Where Status -eq "Running").DisplayName # powershell 4
-
