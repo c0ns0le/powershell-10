@@ -102,6 +102,7 @@ get-help
 get-help get-command
 get-command -?   # gets help
 get-help get-command -online # help in browser
+get-help services # seach help system for articles on services
 
 get-help (help, man alias)  # gets help page for get-content
 get-help get-content -examples  # examples parameter shows examples of a command
