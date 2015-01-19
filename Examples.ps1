@@ -377,10 +377,20 @@ Get-PSSnapin
 Get-PSSnapin -Registered
 
 #---------------------------------------------------------------------------------
-# .NET Framework access (perl module syntax)
+# .NET framework access (perl module syntax)
 
-# [math] refers to System.Math class
-[Math]::pow(2,3)  # access Math.Pow()    the :: signifies a static method on the class
+<#  type accelerators are short names for .net class names
+    http://www.powershellmagazine.com/2012/04/27/a-day-in-the-life-of-a-poshoholic-creating-and-using-type-accelerators-and-namespaces-the-easy-way/
+
+    [math] refers to System.Math class
+    [xml] System.Xml.XmlDocument
+    [string] System.String
+    [datetime] System.DateTime
+    [wmi] System.Management.ManagementObject
+    [regex] System.Text.RegularExpressions.Regex
+#>
+
+[Math]::pow(2,3)  # access Math.Pow()  the :: signifies a static method on the class
 [math].getmethods() | select name -Unique  # get list of methods on math class
 [math]::e
 [math]::pi
@@ -395,35 +405,34 @@ $t = New-Object -typename System.Timers.Timer `
         AutoReset=$false
     }
 
-$t = null # destroys object (set for garbage collection)
+$t = null  # destroys object (set for garbage collection)
 
 # reference .net types and access static members
-[System.Environment]::MachineName #static member
-[System.Environment]::GetLogicalDrives() # call static function
-[System.Environment] | Get-Member
-
+[System.Environment]::MachineName          #static member
+[System.Environment]::GetLogicalDrives()   # call static function
+[System.Environment] | gm                  # get-member
 
 # reference instance members (dot)
-[AppDomain]:: CurrentDomain.GetAssemblies() # instance method
+[AppDomain]::CurrentDomain.GetAssemblies() # instance method
 
 # you can assign a type reference to a variable and use it to reference later
 $s = [System.Security.Cryptography.SHA1]
 
-
 # load an assembly into powershell session
-Add-Type -AssemblyName System.Drawing # need to load the system.drawing assembly before using it
-Add-Type -Path ./CustomTypes.dll # load your own custom assemblies before using user-defined types
+Add-Type -AssemblyName System.Drawing       # need to load the system.drawing assembly before using it
+Add-Type -Path ./CustomTypes.dll            # load your own custom assemblies before using user-defined types
 
 # use import-module for assemblies that contain powershell cmdlets or providers
 Import-Module ./MyCustomtTypes.dll
 
-
 #---------------------------------------------------------------------------------
-# Working with the web
+# web access
 
-# curl alias  make web request
+# invoke-webrequest (alias curl or iwr)
 $r = Invoke-WebRequest http://www.google.com
 $r.Content
+
+# invoke a rest method (alias irm)
 Invoke-RestMethod http://website.com/service.aspx
 
 # restart iis
