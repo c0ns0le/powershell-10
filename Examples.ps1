@@ -1,4 +1,4 @@
-﻿#---------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------
 # powershell general info
 
 <#
@@ -26,10 +26,10 @@ cmd /c dir
 #>
 
 <#
-In PowerShell, there are four different categories of commands: 
+Four categories of commands: 
 
 cmdlets - 
-    A cmdlet is implemented by a .NET class that derives from the Cmdlet base class in the PowerShell Software Developers Kit (SDK).
+    A cmdlet is implemented by a .NET class that derives from the Cmdlet base class in the PowerShell SDK.
     This category of command is compiled into a DLL and loaded into the PowerShell process
     always have names of the form Verb-Noun,
     cmdlets -  Use Verb-Noun form.
@@ -94,7 +94,7 @@ $PSVersionTable # version of powershell currently running
 #---------------------------------------------------------------------------------
 # Help
 
-get-command
+get-command # gcm
 get-command -verb "get"
 get-command -noun "service"
 
@@ -102,13 +102,12 @@ get-help
 get-help get-command
 get-command -?   # gets help
 get-help get-command -online # help in browser
-get-help services # seach help system for articles on services
 
 get-help (help, man alias)  # gets help page for get-content
 get-help get-content -examples  # examples parameter shows examples of a command
 
-# get-member will tell you what properties and methods are on an object
-Get-Process | Get-Member  # tells you what props and methods are on the object returned by get-process
+# get-member shows what properties and methods are on an object
+Get-Process | Get-Member  # shows what props and methods are on the object returned by get-process
 ps|gm
 
 # help topics documented
@@ -119,6 +118,7 @@ About_Pipelines
 About_Scripts
 About_*
 Get-Help About* # lists help topics
+get-help services # seach help system for articles on services
 
 #---------------------------------------------------------------------------------
 # variables 
@@ -129,8 +129,8 @@ $x.gettype()  # shows type information about a variable
 $i = "hello"  # produces an error
 
 get-variable i  
-get-variable  # gets list of all variables
-remove-variable i  # deletes the variable
+get-variable  # gv - gets list of all variables
+remove-variable i  # rv - deletes the variable
 
 # use backquote ` to quote a single character
 cd “c:\program files”
@@ -154,17 +154,14 @@ cd "c:\program $v"
 # escape sequences start with back tick
 " one line`n anotherline"
 
-$heretext = @"
+$multilinetext = @"
 this is some multi line
 text across multiple lines
 and more here 
 "@  # this must be on a line by itself
 
-$heretext
-
 # expressions inside strings
 "there are $((Get-ChildItem).Count) items in folder $(get-location)"
-
 "here is a calculation $(15*17)"
 
 $x = 7
@@ -212,6 +209,7 @@ $h["a"]  # access value of a
 
 #---------------------------------------------------------------------------------
 # built-in variables
+get-variable # gv returns all variables
 $true
 $false
 $null
@@ -219,11 +217,12 @@ $HOME
 $Host   # version of powershell currently running
 $pid
 $PSVersionTable # version of powershell currently running
-$_  # used to iterate through collection
 
+$_  # used to iterate through collection
 $_ # variable is the current value of a variable in a pipeline
+
 $list = 1..4
-$list | foreach{square $_ }
+$list | foreach{$_ * $_ }
 
 #---------------------------------------------------------------------------------
 # flow control statements (if, switch, loops)
@@ -258,6 +257,13 @@ foreach ($file in get-childitem)
     $file.Name
 }
 
+# percent % is short for foreach
+1..5|%{$_*$_}
+
+# a great way to do something 10 times
+foreach ($i in 1..10) { }
+foreach ($i in 10..1) { }
+foreach ($i in 0..($Files.Count-1)) { }
 
 #---------------------------------------------------------------------------------
 # error handling and debugging
@@ -367,7 +373,11 @@ Get-PSSnapin -Registered
 #---------------------------------------------------------------------------------
 # .NET Framework access (aka perl module syntax)
 
+# [math] is actually System.Math class
 [Math]::pow(2,3)  # access Math.Pow()    the :: signifies a static method on the object
+[math].GetMethods() | Select -Property Name -Unique # get list of methods on math class
+[math]::e
+[math]::pi
 
 # create and use .net objects
 $t = New-Object -typename System.Timers.Timer `
