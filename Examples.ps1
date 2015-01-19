@@ -101,12 +101,14 @@ get-command -noun "service"
 get-help
 get-help get-command
 get-command -?   # gets help
+get-help get-command -online # help in browser
 
 get-help (help, man alias)  # gets help page for get-content
 get-help get-content -examples  # examples parameter shows examples of a command
 
 # get-member will tell you what properties and methods are on an object
 Get-Process | Get-Member  # tells you what props and methods are on the object returned by get-process
+ps|gm
 
 # help topics documented
 About_Execution_Policies
