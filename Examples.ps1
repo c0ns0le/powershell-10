@@ -93,6 +93,20 @@ $env:Path += ";C:\users\enelson\bin"
 # list paths on separate lines
 ($env:Path).Replace(';',"`n")
 
+# invoke-item is the same thing as clicking on an object.  alias ii
+ii myfile.txt  # same thing as clicking on myfile.txt
+ii .  # opens the current directory in windows explorer
+# scott hanselman has "powershell prompt here" to get from explorer back to powershell
+
+# expand a cutoff string in ui
+select -expand xyz  
+
+# to output results to the clipboard, pipe results to clip 
+ps | clip
+
+# output grid view  out-gridview ogv
+ls | ogv  # pops up a grid view dialog box
+
 #---------------------------------------------------------------------------------
 # Help
 
@@ -395,6 +409,9 @@ Get-PSSnapin -Registered
 [math]::e
 [math]::pi
 
+[xml]  # take an xml file and create a System.Xml.XmlDocument
+([xml](get-content my.xml))
+
 # create and use .net objects
 $t = New-Object -typename System.Timers.Timer `
     -ArgumentList 500  # pass arguments
@@ -443,9 +460,8 @@ restart-service w3svc
 
 new-webserviceproxy  # use to talk to web services
 
-
 #---------------------------------------------------------------------------------
-# Working with sql server
+# sql server
 
 # To use Invoke-SqlCmd do this first:
 Add-PSSnapin SqlServerCmdletSnapin100
@@ -458,7 +474,7 @@ Add-PSSnapin SqlServerProviderSnapin100
 # script blocks
 
 # assign script blocks to variables
-$myscriptblock = { get-childitem; "hello" } # doesnt run yet
+$myscriptblock = { ls; "hello"; } # doesnt run yet
 & $myscriptblock  # execute the script block
 
 $value = {12+23}
@@ -480,10 +496,11 @@ $qa = {
     if (!$two) { $two = "default" } # check if empty value, assign a default 
 }
 
-param ([int] $i) # can use explicit typing. will throw error if wrong type is passed
+param ([int]$i) # explicit typing will throw error if wrong type is passed
 
 # access command line switches
-param([switch]$verbose, [switch]$debug, [switch]$mycustom) # verbose and debug are built-in, you can create your own custom too
+param([switch]$verbose, [switch]$debug, [switch]$mycustom) 
+# verbose and debug are built-in, you can create your own custom
 
 # use process command to pipeline enable a block
 $myblock =
@@ -496,7 +513,7 @@ $myblock =
 }
 7 | &$myblock  # 7 is pipelined into script block, returns yes
 
-# variables defined external to script block are copied inside script block
+# variables defined external to script block are copied (by value) inside script block
 $x = 7
 {$x = 8} 
 $x # still 7
@@ -513,36 +530,34 @@ $private:unmentionables = 7
 #---------------------------------------------------------------------------------
 # functions - script blocks with a name
 
-function get-fullname([ref] $hi)  # ref turns into object and refers to original
+function get-fullname([ref]$hi)  # ref turns into object and refers to original
 {
     write-host ($hi.Value)
 }
 get-fullname("hey")
 
-# filters - kind of like a function
+# filters - similar to a function
 filter Show-PS1Files
 {
    
 }
 
-# This default array is available in the variable $args.
+# This default array is available in the variable $args
 function hello { "Hello there $args, how are you?" }
 
 function square($x) {$x*$x}
 square(5)  or square 5   # can invoke with or without parens
 
-#---------------------------------------------------------------------------------
-# create help page for functions
-
+# create a help page for functions
 <#
  .SYNOPSIS
  .DESCRIPTION
  .PARAMETER ... etc
 #>
 
-
 #---------------------------------------------------------------------------------
 # Manage events inside powershell
+
 Register-ObjectEvent 
 Get-Event
 Set-Event
@@ -551,112 +566,58 @@ Remove-Event
 Get-EventSubscriber
 
 #---------------------------------------------------------------------------------
-# modules - the CPAN for powershell
-
-# microsoft technet script repository
-
-
-
-
-#---------------------------------------------------------------------------------
-
-read-host -prompt
-
-# import-module
-
-# powershell building code better than msbuild
-
-
-
-# Powershell accelerators
-[xml] # takes an xml file and creates an XmlDocument().   must be well formed
-([xml](get-content c:/my.xml))
-
-
-
-#---------------------------------------------------------------------------------
 # system commands
-control    # control panel
 
+# control panel
+control
+
+# system processes
 get-process # ps alias
 ps | sort cpu -desc | select -first 10   # top 10 cpu processes
 stop-process # kill alias  kill a process
 (ps|where name -eq chrome).kill()  # kill a set of processes
 
-# output grid view  out-gridview ogv
-get-command | group verb | out-gridview  # pops up a grid view dialog box
-
 # get all powershell processes on the system
 get-process | Where-Object {$_.ProcessName -eq "powershell"}
 
+#---------------------------------------------------------------------------------
+# working with sets - select, where, group by, sort, etc
 
-the $OFS variable stores default separator  
+select-object  # select alias
+# select some of the objects piped into it or select some properties of each object piped into it.
 
+ls | sort -property length -descending | select -first 1 -property directory   # this is basically a select top 1 directory from ls order by length desc
+ls | sort -property length -descending | select -first 1 | foreach { $_.DirectoryName }
+ls | sort -descending   # sorts directory by filename by default
+ls | sort -property length  # sort by any property you want
 
-
-Group-Object  (group by statement)
+group-object  # group alias (group by statement)
 get-command | group verb | select -expandproperty group  # expands the group column
 group verb -noelement  # suppress the group in the output
-
 
 set-alias myalias get-childitems
 export / import aliases from/to a csv file
 
-
-
-get-childItem # ls, dir alias
-
-$files = dir
-$files[1]   # prints second entry in the directory, 0 relative
-
-dir | sort -descending   # sorts directory by filename by default
-dir | sort -property length  # sort by any property you want
-
-select-object  # select alias
-This cmdlet allows you to select some of the objects piped into it or select some properties of each object piped into it.
-$a = dir | sort -property length -descending | select-object -first 1 -property directory   # this is basically a select top 1 directory from dir order by length desc
-
-
-$a = dir | sort -property length -descending | select-object -first 1 | foreach-object { $_.DirectoryName }
-
 $total = 0
-dir | foreach-object {$total += $_.length }   # sums up the lengths of the files in the directory
-$total
-308
+ls | foreach {$total += $_.length }   # sums up the lengths of the files in the directory
 
 get-process | sort -desc cpu | select -first 3  # get top 3 cpu processes
 
-Can call WMI objects for system information.  Get the 3 disks with most freespace:
+#---------------------------------------------------------------------------------
+Call wmi objects for system information.  Get the 3 disks with most freespace:
 get-wmiobject win32_logicaldisk | sort -desc freespace | select -first 3 | format-table -autosize deviceid, freespace
-
-
-
-# invoke item is the same thing as clicking on an object.   alias ii
-invoke-item myfile.txt  # same thing as clicking on myfile.txt
-Invoke-Item .  # this opens the current directory in windows explorer   ii .
-# scott hanselman has "powershell prompt here" to get from explorer back to powershell
-
-
-select -expand xyz  # expands a cutoff string in ui
-
-
-# to output results to the clipboard, pipe results to clip 
-ps | clip
 
 
 # transform text output from a program into first-class objects
 # basic idea is to turn the text into a csv file and then convert the csv into objects
 myprogramwithtextoutput | foreach {$_ -replace "\s+",','} | ConvertFrom-Csv -Header Col1,Col2
 
+#---------------------------------------------------------------------------------
+# modules - the CPAN for powershell
 
-#modules
+<#
 module repositories:
-ms technet scriptcenter
-poshcode
-codeplex
-github
-nuget
-psget
+microsoft technet script repository, poshcode, codeplex, github, nuget, psget
 
 pscx - most popular 3rd party module -  grab bag of useful functions
 show-ui - creat wpf user interfaces
@@ -665,21 +626,24 @@ reflection
 pester - BDD testing
 PSake - build scripting
 studioshell - visual studio automation
+#>
 
-get-module # see what modules are loaded
-get-module -listavailable # show what modules are available
+get-module   # alias gmo - see what modules are loaded
+get-module -listavailable   # show what modules are available
 import-module pscx
 remove-module
 
-to install a module (important to use exact modulename)!
+<#
+to install a module (important to use exact modulename)
 create a directory under documents/windowspowershell/modules/<modulename>
 create a file in the folder named <modulename>.psm1
 paste module code into the file
 verify it is installed using get-module -listavailable
 
-#builds
+builds:
 psake  - SAH-kee
 can wrap msbuild with psake (similar to makefiles)
+#>
 
 properties {
 	$config = 'debug'  # debug or release
@@ -698,18 +662,22 @@ task -name Clean -description "cleans" -action {
 }
 
 task -name Rebuild -depends Clean,Build -description "rebuild"
+task -name default -depends Build
 
-task -name default -depends Build;
+#---------------------------------------------------------------------------------
+# visual studio and studioshell
 
+<#
 studioshell - powershell inside visual studio window
 you can traverse visual studio ide object tree like a drive in powershell
 myproject.psm1 project solution module file.  lives next to myproject.sln file
 when visual studio opens a solution file, it automatically runs the psm1 file.
 add entries to visual studio menus
+#>
 
+#---------------------------------------------------------------------------------
+# background jobs and scheduled tasks
 
-
-# powershell background jobs
 # uses .net remoting.  parent/child relationship
 # use start-job or use -AsJob parameter, supported by many commands
 $procjob = start-job {get-process}
@@ -740,19 +708,27 @@ disable-scheduledjob
 enable-scheduledjob
 unregister-scheduledjob myjob
 
+new-pssession
 
+#---------------------------------------------------------------------------------
+# console input/output 
 
-#formatting output 
+# to prompt user, read from console
+read-host -prompt "Enter something"
+
+# out-host - same as redirecting output with >   ?
 out-host 
+
+# formatting output
 format-wide -column 4  # 4 columns.  alias fw
 format-table -autosize -wrap
 format-list # alias fl
 
+# output grid view  out-gridview ogv
+ls | ogv  # pops up a grid view dialog box
 
-new-pssession
-
-
-
+#---------------------------------------------------------------------------------
+# shortcuts
 
 ? is short for where
 % is short for foreach
