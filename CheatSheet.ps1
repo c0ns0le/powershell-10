@@ -339,26 +339,6 @@ $all = [string]::Join($seperator, $a)
 ps > ps.txt
 ps | out-file ps2.txt
 
-# output data to html file
-# ps = get-process
-ps | convertto-html > ps.html    
-ii ps.html
-
-# output data to excel csv file
-ps | export-csv services.csv
-
-# import data from excel csv file
-$header = "ColumnOne", "ColumnTwo"
-$mycsv = import-csv "my.csv" -header $header
-$mycsv.Count
-
-# load xml from file 
-$xml = new-object xml
-$xml.Load("myfile.xml")
-
-# write xml to file
-$xml | out-file "myfile.xml"
-
 # store a variable in a file:
 ${C:\Temp\CoolVariable.txt} = "very blue"
 # read it out of a file:
@@ -371,6 +351,38 @@ $full = "The sky is " + ${C:\Temp\CoolVariable.txt} + " today."
 
 # Create fully qualified path from filename only
 $path = $file | Resolve-Path
+
+#---------------------------------------------------------------------------------
+# working with excel csv
+
+# convert to/from csv
+convertfrom-csv
+converto-csv
+
+# output data to excel csv file
+ps | export-csv services.csv
+
+# import data from excel csv file
+$header = "ColumnOne", "ColumnTwo"
+$mycsv = import-csv "my.csv" -header $header
+$mycsv.Count
+
+#---------------------------------------------------------------------------------
+# working with html and xml
+
+# output data to html file
+# ps = get-process
+ps | convertto-html > ps.html    
+ii ps.html
+
+convertto-xml
+
+# load xml from file 
+$xml = new-object xml
+$xml.Load("myfile.xml")
+
+# write xml to file
+$xml | out-file "myfile.xml"
 
 #---------------------------------------------------------------------------------
 # Providers - things we can navigate and get data from
