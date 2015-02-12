@@ -627,6 +627,10 @@ get-wmiobject win32_logicaldisk | sort -desc freespace | select -first 3 | forma
 # basic idea is to turn the text into a csv file and then convert the csv into objects
 myprogramwithtextoutput | foreach {$_ -replace "\s+",','} | ConvertFrom-Csv -Header Col1,Col2
 
+# invoke command on remote machine
+invoke-command -cn computername
+icm -cn computername
+
 #---------------------------------------------------------------------------------
 # modules - the CPAN for powershell
 
