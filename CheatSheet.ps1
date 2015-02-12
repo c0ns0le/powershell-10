@@ -591,6 +591,7 @@ stop-process # kill alias  kill a process
 
 # get all powershell processes on the system
 get-process | Where-Object {$_.ProcessName -eq "powershell"}
+ps | where name -eq powershell
 
 #---------------------------------------------------------------------------------
 # working with sets - select, where, group by, sort, etc
