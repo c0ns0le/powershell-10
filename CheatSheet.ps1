@@ -616,6 +616,8 @@ ls | foreach {$total += $_.length }   # sums up the lengths of the files in the 
 
 get-process | sort -desc cpu | select -first 3  # get top 3 cpu processes
 
+ps | where name -match svc  # match all process names with *svc*
+
 #---------------------------------------------------------------------------------
 Call wmi objects for system information.  Get the 3 disks with most freespace:
 get-wmiobject win32_logicaldisk | sort -desc freespace | select -first 3 | format-table -autosize deviceid, freespace
