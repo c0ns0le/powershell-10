@@ -1,0 +1,38 @@
+Add/Remove Programs appwiz.cpl
+Administrative Tools control admintools
+Calculator calc
+Certificate Manager certmgr.msc
+Computer Management compmgmt.msc
+Control Panel control
+Device Manager devmgmt.msc
+Event Viewer eventvwr.msc
+Folders Properties control folders
+IP Configuration ipconfig
+	http://ss64.com/nt/ipconfig.html
+Log out logoff
+Microsoft Paint mspaint
+Performance Monitor perfmon.msc
+Registry Editor regedit
+Registry Editor regedit32
+Remote Desktop mstsc
+Services services.msc
+Shut Down Windows shutdown
+	/s         Shutdown
+  /r         Shutdown and Restart
+  /a         Abort a system shutdown
+  /h         Hibernate the local computer
+System Configuration Utility msconfig
+System Information msinfo32
+System Properties sysdm.cpl
+Task Manager taskmgr
+Telnet Client telnet
+Windows Features  optionalfeatures
+Windows Firewall firewall.cpl
+Windows Firewall with Advanced Security  wf.msc
+Windows Management Infrastructure wmimgmt.msc
+Windows Update  wuapp
+
+
+
+
+
