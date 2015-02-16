@@ -479,6 +479,11 @@ new-webserviceproxy  # use to talk to web services
 
 [net.dns]::GetHostByName('www.google.com') # get ip address, but just use ping
 
+# get zipcodes from web service
+$webservice = New-WebServiceProxy -Uri 'http://www.webservicex.net/uszip.asmx?WSDL'
+$webservice.GetInfoByCity('New York').Table
+$webservice.GetInfoByZIP('10286').Table 
+
 #---------------------------------------------------------------------------------
 # sql server
 
