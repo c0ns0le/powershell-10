@@ -421,6 +421,8 @@ Get-PSSnapin -Registered
 [math]::e
 [math]::pi
 
+[guid]::newguid()
+
 [xml]  # take an xml file and create a System.Xml.XmlDocument
 ([xml](get-content my.xml))
 
@@ -455,7 +457,7 @@ Add-Type -Path ./CustomTypes.dll            # load your own custom assemblies be
 Import-Module ./MyCustomtTypes.dll
 
 #---------------------------------------------------------------------------------
-# web access
+# web access and networking
 
 # invoke-webrequest (alias curl or iwr)
 $r = Invoke-WebRequest http://www.google.com
@@ -471,6 +473,8 @@ stop-service w3svc
 restart-service w3svc
 
 new-webserviceproxy  # use to talk to web services
+
+[net.dns]::GetHostByName('www.google.com') # get ip address, but just use ping
 
 #---------------------------------------------------------------------------------
 # sql server
