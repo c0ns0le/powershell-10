@@ -776,3 +776,16 @@ $Store = New-Object system.security.cryptography.X509Certificates.x509Store($Sto
 $Store.Open('ReadWrite')
 $Store.Add($certificate)
 $Store.Close()
+
+# When you use Get-PfxCertificate, you can read in PFX certificate files and use the certificate to sign scripts. 
+# However, the cmdlet will always interactively ask for the certificate password.
+# Here is some logic that enables you to submit the password by script:
+
+$PathToPfxFile = 'C:\temp\test.pfx'
+$PFXPassword = 'test'
+
+Add-Type -AssemblyName System.Security
+$cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+$cert.Import($PathToPfxFile, $PFXPassword, 'Exportable')
+
+$cert  
