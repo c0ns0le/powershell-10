@@ -758,3 +758,21 @@ ls | ogv  # pops up a grid view dialog box
 
 ? is short for where
 % is short for foreach
+
+#---------------------------------------------------------------------------------
+# certificates
+
+# To programmatically load a certificate from a file and install it in a specific location inside the certificate store
+$pfxpath = 'C:\temp\test.pfx'
+$password = 'test'
+[System.Security.Cryptography.X509Certificates.StoreLocation]$Store = 'CurrentUser'
+$StoreName = 'root'
+
+Add-Type -AssemblyName System.Security
+$certificate = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
+$certificate.Import($pfxpath, $password, 'Exportable')
+
+$Store = New-Object system.security.cryptography.X509Certificates.x509Store($StoreName, $StoreLocation)
+$Store.Open('ReadWrite')
+$Store.Add($certificate)
+$Store.Close()
