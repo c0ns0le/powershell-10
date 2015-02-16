@@ -813,3 +813,9 @@ $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate
 $cert.Import($PathToPfxFile, $PFXPassword, 'Exportable')
 
 $cert  
+#----------------------------------------------------------------------------------------------
+
+# Most of the time, PowerShell will not show you the complete results that you get from cmdlets. 
+# Instead, PowerShell limits the results to only the most common pieces of information.
+# To actually see everything, pipe it to  Select-Object -property *
+ps|select *
