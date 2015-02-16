@@ -126,6 +126,9 @@ gh get-content -examples  # examples parameter shows examples of a command
 Get-Process | Get-Member  # shows what props and methods are on the object returned by get-process
 ps|gm
 
+# To see the signature(s) of a method, omit the parenthesis:
+[math]::abs
+
 # help topics documented
 About_Execution_Policies
 About_Operators
