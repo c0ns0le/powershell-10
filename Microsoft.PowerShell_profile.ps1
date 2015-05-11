@@ -21,6 +21,16 @@ function Prompt
 }
 #>
 
+$OrigBgColor = $host.ui.rawui.BackgroundColor
+$OrigFgColor = $host.ui.rawui.ForegroundColor
+
+# MSBUILD has a nasty habit of leaving the foreground color red
+# if you Ctrl+C while it is outputting errors.
+function Reset-Colors {
+    $host.ui.rawui.BackgroundColor = $OrigBgColor
+    $host.ui.rawui.ForegroundColor = $OrigFgColor
+}
+
 # display path environment variable per line
 function Get-PathPerLine()
 {
