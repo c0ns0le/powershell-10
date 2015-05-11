@@ -6,18 +6,20 @@
 # Set-ExecutionPolicy RemoteSigned
 
 # node and git use black
-$host.UI.RawUI.BackgroundColor="Black"
+# $host.UI.RawUI.BackgroundColor="Black"
 
 # set the error background to decency
 # $host.PrivateData.ErrorBackgroundColor = "Black"
 
 # color prompt
+<#
 function Prompt
 {
     $promptString =  "$pwd`nPS >"
     Write-Host $promptString -nonewline -ForegroundColor DarkCyan
     return " "
 }
+#>
 
 # display path environment variable per line
 function Get-PathPerLine()
