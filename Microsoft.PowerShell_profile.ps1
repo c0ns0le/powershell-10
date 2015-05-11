@@ -7,19 +7,18 @@
 
 # node and git use black
 # $host.UI.RawUI.BackgroundColor="Black"
+$host.UI.RawUI.BackgroundColor="DarkMagenta"
 
 # set the error background to decency
 # $host.PrivateData.ErrorBackgroundColor = "Black"
 
 # color prompt
-<#
 function Prompt
 {
-    $promptString =  "$pwd`nPS >"
-    Write-Host $promptString -nonewline -ForegroundColor DarkCyan
+    Write-Host "PS >" -nonewline -ForegroundColor DarkCyan
     return " "
 }
-#>
+
 
 $OrigBgColor = $host.ui.rawui.BackgroundColor
 $OrigFgColor = $host.ui.rawui.ForegroundColor
