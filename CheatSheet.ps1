@@ -356,6 +356,24 @@ $full = "The sky is " + ${C:\Temp\CoolVariable.txt} + " today."
 $path = $file | Resolve-Path
 (get-item 'myfile.txt').FullName
 
+# Read a textfile line by line
+try
+{
+	$inputFile = New-Object IO.StreamReader((Get-Item $InputPath).FullName, [text.encoding]::GetEncoding(1252))
+	$outputFile = New-Object IO.StreamWriter([io.path]::Combine($pwd.Path, $CsvPath), $false, [text.encoding]::GetEncoding(1252))
+	$line = $inputFile.ReadLine()
+	while($line -ne $null)
+	{
+		$outputFile.WriteLine($line)
+		$line = $inputFile.ReadLine()
+	}
+}
+finally
+{
+	if($inputFile.BaseStream.CanRead){$inputFile.Close()}
+	if($outputFile.BaseStream.CanWrite){$outputFile.Close()}
+}
+
 #---------------------------------------------------------------------------------
 # working with excel csv
 
