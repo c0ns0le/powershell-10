@@ -354,6 +354,7 @@ $full = "The sky is " + ${C:\Temp\CoolVariable.txt} + " today."
 
 # Create fully qualified path from filename only
 $path = $file | Resolve-Path
+(get-item 'myfile.txt').FullName
 
 #---------------------------------------------------------------------------------
 # working with excel csv
