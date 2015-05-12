@@ -1,30 +1,31 @@
 # powershell profile
+# location $profile
 # ii $profile
 # ise $profile
 # to reload profile . $profile
 
 # Set-ExecutionPolicy RemoteSigned
 
-# node and git use black
+# node and git use black background
 # $host.UI.RawUI.BackgroundColor="Black"
+
+# DarkMagenta is the powershell default
 $host.UI.RawUI.BackgroundColor="DarkMagenta"
 
-# set the error background to decency
-# $host.PrivateData.ErrorBackgroundColor = "Black"
+# change error background from black to default ps
+$host.PrivateData.ErrorBackgroundColor = "DarkMagenta"
 
-# color prompt
+# remove path from prompt
 function Prompt
 {
-    Write-Host "PS >" -nonewline -ForegroundColor DarkCyan
+    Write-Host "PS>" -NoNewline
     return " "
 }
 
-
+# preserve colors
 $OrigBgColor = $host.ui.rawui.BackgroundColor
 $OrigFgColor = $host.ui.rawui.ForegroundColor
 
-# MSBUILD has a nasty habit of leaving the foreground color red
-# if you Ctrl+C while it is outputting errors.
 function Reset-Colors {
     $host.ui.rawui.BackgroundColor = $OrigBgColor
     $host.ui.rawui.ForegroundColor = $OrigFgColor
@@ -59,6 +60,7 @@ function kill-all($name)
 $true,
 $true
 )
+
 # replace with type accelerator module
 function get-typeaccelerators()
 {
