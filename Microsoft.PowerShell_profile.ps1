@@ -85,6 +85,18 @@ $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
 $env:Path = $env:Path + ";C:\Program Files\Sublime Text 3"
 $env:Path = $env:Path + ";" + $env:NODE_PATH
 
+#Set environment variables for Visual Studio Command Prompt
+pushd 'c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC'
+cmd /c "vcvarsall.bat&set" |
+foreach {
+  if ($_ -match "=") {
+    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+  }
+}
+popd
+write-host "`nVisual Studio 2010 Command Prompt variables set." -ForegroundColor Yellow
+
+
 Set-Alias path Get-PathPerLine
 Set-Alias sublime sublime_text.exe
 Set-Alias npp notepad++.exe
