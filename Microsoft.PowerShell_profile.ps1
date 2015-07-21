@@ -82,7 +82,7 @@ $env:Path = $env:Path + ";C:\Program Files\MongoDB 2.6 Standard\bin"
 $env:Path = $env:Path + ";C:\Program Files\nodejs"
 $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
 # $env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
-# $env:Path = $env:Path + ";C:\sysinternals"
+$env:Path = $env:Path + ";C:\sysinternals"
 $env:Path = $env:Path + ";C:\Program Files\Sublime Text 3"
 $env:Path = $env:Path + ";" + $env:NODE_PATH
 
