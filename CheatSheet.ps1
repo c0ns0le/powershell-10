@@ -51,6 +51,12 @@ native win32 Windows commands.
 
 h   # shows your history
 
+
+# setup profile
+Test-path $profile
+New-item –type file –force $profile
+ise $profile
+
 # To run scripts, need to set execution policy
 get-executionpolicy
 set-executionpolicy remotesigned  # run all local scripts and only remote scripts signed by a trusted source
