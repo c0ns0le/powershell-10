@@ -49,6 +49,8 @@ native win32 Windows commands.
 #---------------------------------------------------------------------------------
 # powershell environment
 
+h   # shows your history
+
 # To run scripts, need to set execution policy
 get-executionpolicy
 set-executionpolicy remotesigned  # run all local scripts and only remote scripts signed by a trusted source
@@ -113,6 +115,7 @@ ls | ogv  # pops up a grid view dialog box
 get-command # gcm
 gcm -verb "get"
 gcm -noun "service"
+get-command -noun csv    # get all commands for csv files
 
 get-help  # alias gh
 gh get-command
@@ -303,6 +306,7 @@ write-debug # writes debug info
 #---------------------------------------------------------------------------------
 # filesystem and file io
 
+
 get-content  # alias gc or cat
 cat c:/file.txt  # gets the contents of a file
 
@@ -319,6 +323,8 @@ Pop-Location
 get-childitem # alias ls
 ls | where length -gt 100kb | sort length | ft name, length -AutoSize
 ls | select name, length
+
+new-item  myfile.txt  # same as touch command
 
 # force delete a subtree
 remove-item  # alias rm
@@ -640,9 +646,11 @@ control
 
 # system processes
 get-process # ps alias
+get-process chrome   # get by name
 ps | sort cpu -desc | select -first 10   # top 10 cpu processes
 stop-process # kill alias  kill a process
 (ps|where name -eq chrome).kill()  # kill a set of processes
+get-process chrome | stop-process   # much better way to kill set of processes
 
 # get all powershell processes on the system
 get-process | Where-Object {$_.ProcessName -eq "powershell"}
@@ -677,6 +685,7 @@ ps | where name -match svc  # match all process names with *svc*
 Call wmi objects for system information.  Get the 3 disks with most freespace:
 get-wmiobject win32_logicaldisk | sort -desc freespace | select -first 3 | format-table -autosize deviceid, freespace
 
+Get-WmiObject win32_bios -computername (get-content c:\mylistofcomputernames.txt)
 
 # transform text output from a program into first-class objects
 # basic idea is to turn the text into a csv file and then convert the csv into objects
