@@ -1,19 +1,21 @@
 # powershell profile
-# location $profile
-# ii $profile
+
+# setup profile
+# Test-path $profile
+# New-item –type file –force $profile
 # ise $profile
-# to reload profile . $profile
+# reload profile . $profile
 
 # Set-ExecutionPolicy RemoteSigned
 
-# node and git use black background
-# $host.UI.RawUI.BackgroundColor="Black"
+# DarkMagenta powershell default
+$host.UI.RawUI.BackgroundColor="white"
+$host.UI.RawUI.ForegroundColor="black"
+$host.PrivateData.ErrorBackgroundColor = "white"
 
-# DarkMagenta is the powershell default
-$host.UI.RawUI.BackgroundColor="DarkMagenta"
-
-# change error background from black to default ps
-$host.PrivateData.ErrorBackgroundColor = "DarkMagenta"
+# preserve colors
+$OrigBgColor = $host.ui.rawui.BackgroundColor
+$OrigFgColor = $host.ui.rawui.ForegroundColor
 
 # remove path from prompt
 function Prompt
@@ -21,10 +23,6 @@ function Prompt
     Write-Host "PS>" -NoNewline
     return " "
 }
-
-# preserve colors
-$OrigBgColor = $host.ui.rawui.BackgroundColor
-$OrigFgColor = $host.ui.rawui.ForegroundColor
 
 function Reset-Colors {
     $host.ui.rawui.BackgroundColor = $OrigBgColor
