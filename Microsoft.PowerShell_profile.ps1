@@ -11,11 +11,27 @@
 # DarkMagenta powershell default
 $host.UI.RawUI.BackgroundColor="white"
 $host.UI.RawUI.ForegroundColor="black"
+
 $host.PrivateData.ErrorBackgroundColor = "white"
 
-# preserve colors
-$OrigBgColor = $host.ui.rawui.BackgroundColor
-$OrigFgColor = $host.ui.rawui.ForegroundColor
+# output pane 
+$psISE.Options.OutputPaneBackgroundColor = 'white' 
+$psISE.Options.OutputPaneTextBackgroundColor = 'white' 
+$psISE.Options.OutputPaneForegroundColor = 'black' 
+
+# command pane 
+$psISE.Options.CommandPaneBackgroundColor = 'white' 
+$psise.Options.CommandPaneForegroundColor = 'black'
+
+# copy script panel token colors to console panel token colors (only in ISE)
+if ($host.name -ne 'ConsoleHost')
+{
+    foreach ($pair in $psISE.Options.TokenColors)
+    {
+       $psISE.Options.ConsoleTokenColors.Item($pair.Key) = `
+           $psISE.Options.TokenColors.Item($pair.Key) 
+    }
+}
 
 # remove path from prompt
 function Prompt
@@ -76,8 +92,9 @@ $env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
 $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
 $env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
 $env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
+$env:Path = $env:Path + ";C:\Program Files\Git\cmd"
 $env:Path = $env:Path + ";C:\Program Files\MongoDB 2.6 Standard\bin"
-$env:Path = $env:Path + ";C:\Program Files\nodejs"
+# $env:Path = $env:Path + ";C:\Program Files\nodejs"
 $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
 # $env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
 $env:Path = $env:Path + ";C:\sysinternals"
@@ -96,11 +113,11 @@ foreach {
 popd
 
 Set-Alias path Get-PathPerLine
-Set-Alias sublime sublime_text.exe
-Set-Alias npp notepad++.exe
+#Set-Alias sublime sublime_text.exe
+#Set-Alias npp notepad++.exe
 
-Set-Alias ss select-string
-Set-Alias gh set-help
-Set-Alias no New-Object
+#Set-Alias ss select-string
+#Set-Alias gh set-help
+#Set-Alias no New-Object
 
 clear
