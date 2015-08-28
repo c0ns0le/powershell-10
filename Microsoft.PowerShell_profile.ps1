@@ -9,21 +9,22 @@
 # Set-ExecutionPolicy RemoteSigned
 
 # DarkMagenta powershell default
-$host.UI.RawUI.BackgroundColor="white"
-$host.UI.RawUI.ForegroundColor="black"
+# $host.UI.RawUI.BackgroundColor="white"
+# $host.UI.RawUI.ForegroundColor="black"
 
-$host.PrivateData.ErrorBackgroundColor = "white"
+# $host.PrivateData.ErrorBackgroundColor = ""
 
 # output pane 
-$psISE.Options.OutputPaneBackgroundColor = 'white' 
-$psISE.Options.OutputPaneTextBackgroundColor = 'white' 
-$psISE.Options.OutputPaneForegroundColor = 'black' 
+# $psISE.Options.OutputPaneBackgroundColor = 'white' 
+# $psISE.Options.OutputPaneTextBackgroundColor = 'white' 
+# $psISE.Options.OutputPaneForegroundColor = 'black' 
 
 # command pane 
-$psISE.Options.CommandPaneBackgroundColor = 'white' 
-$psise.Options.CommandPaneForegroundColor = 'black'
+# $psISE.Options.CommandPaneBackgroundColor = 'white' 
+# $psise.Options.CommandPaneForegroundColor = 'black'
 
 # copy script panel token colors to console panel token colors (only in ISE)
+<# 
 if ($host.name -ne 'ConsoleHost')
 {
     foreach ($pair in $psISE.Options.TokenColors)
@@ -31,6 +32,22 @@ if ($host.name -ne 'ConsoleHost')
        $psISE.Options.ConsoleTokenColors.Item($pair.Key) = `
            $psISE.Options.TokenColors.Item($pair.Key) 
     }
+}
+#>
+
+# Reset colors if they get messed up
+$OrigBgColor = $host.ui.rawui.BackgroundColor
+$OrigFgColor = $host.ui.rawui.ForegroundColor 
+
+function Reset-Colors {
+    $host.ui.rawui.BackgroundColor = $OrigBgColor
+    $host.ui.rawui.ForegroundColor = $OrigFgColor
+}
+
+# Print out colors
+function Show-Colors()
+{
+    [enum]::GetValues([System.ConsoleColor]) | Foreach-Object {Write-Host $_ -ForegroundColor $_} 
 }
 
 # remove path from prompt
@@ -40,31 +57,17 @@ function Prompt
     return " "
 }
 
-function Reset-Colors {
-    $host.ui.rawui.BackgroundColor = $OrigBgColor
-    $host.ui.rawui.ForegroundColor = $OrigFgColor
-}
-
 # display path environment variable per line
 function Get-PathPerLine()
 {
     $env:Path.Split(";")
 }
+Set-Alias path Get-PathPerLine
 
 # alias reverse lookup
 function Lookup-Alias($cmd)
 {
-    gcm $cmd | % {gal -Definition $_.name -ea 0}
-}
-
-function show-colors()
-{
-    [enum]::GetValues([System.ConsoleColor]) | Foreach-Object {Write-Host $_ -ForegroundColor $_} 
-}
-
-function kill-all($name)
-{
-    ps|where{$_.name -like "*$name*"}|foreach{$_.kill()}
+    Get-Command $cmd | % {Get-Alias -Definition $_.name -ea 0}
 }
 
 # replace with type accelerator module
@@ -81,25 +84,24 @@ function get-typeaccelerators()
     $typeAcceleratorsType::get
 }
 
-function load-assembly($namespace)
+function Load-Assembly($namespace)
 {
     [Reflection.Assembly]::LoadWithPartialName($namespace)
 }
 
+# add paths to environment variable
 $env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
-
-# add path to environment variable
-$env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
-$env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
+# $env:Path = $env:Path + ";C:\Program Files\nodejs"
+$env:Path = $env:Path + ";" + $env:NODE_PATH
+# $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
+# $env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
 $env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
 $env:Path = $env:Path + ";C:\Program Files\Git\cmd"
-$env:Path = $env:Path + ";C:\Program Files\MongoDB 2.6 Standard\bin"
-# $env:Path = $env:Path + ";C:\Program Files\nodejs"
+# $env:Path = $env:Path + ";C:\Program Files\MongoDB 2.6 Standard\bin"
 $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
-# $env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
 $env:Path = $env:Path + ";C:\sysinternals"
+$env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
 $env:Path = $env:Path + ";C:\Program Files\Sublime Text 3"
-$env:Path = $env:Path + ";" + $env:NODE_PATH
 
 #Set environment variables for Visual Studio Command Prompt (VS2013) 
 #Need to update the version (12.0) when new versions of VS arrive
@@ -112,12 +114,7 @@ foreach {
 }
 popd
 
-Set-Alias path Get-PathPerLine
 #Set-Alias sublime sublime_text.exe
 #Set-Alias npp notepad++.exe
-
-#Set-Alias ss select-string
-#Set-Alias gh set-help
-#Set-Alias no New-Object
 
 clear
