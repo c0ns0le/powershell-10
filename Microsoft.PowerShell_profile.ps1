@@ -90,7 +90,8 @@ function Load-Assembly($namespace)
 }
 
 # add paths to environment variable
-$env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
+# $env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
+$env:NODE_PATH = $env:APPDATA + "\npm\node_modules"
 # $env:Path = $env:Path + ";C:\Program Files\nodejs"
 $env:Path = $env:Path + ";" + $env:NODE_PATH
 # $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
@@ -116,5 +117,6 @@ popd
 
 #Set-Alias sublime sublime_text.exe
 #Set-Alias npp notepad++.exe
+#Set-Alias vi sublime_text.exe
 
 clear
