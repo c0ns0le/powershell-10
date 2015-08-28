@@ -44,6 +44,11 @@ function Reset-Colors {
     $host.ui.rawui.ForegroundColor = $OrigFgColor
 }
 
+function Set-BlackWhiteColors {
+    $host.ui.rawui.BackgroundColor = "Black"
+    $host.ui.rawui.ForegroundColor = "White"
+}
+
 # Print out colors
 function Show-Colors()
 {
