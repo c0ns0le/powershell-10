@@ -29,19 +29,28 @@ if ($host.name -ne 'ConsoleHost')
 }
 #>
 
-function Set-ColorBlue {
-    # DarkMagenta powershell default
-    $host.UI.RawUI.BackgroundColor="DarkMagenta"
-    $host.UI.RawUI.ForegroundColor="White"
-    $host.PrivateData.ErrorBackgroundColor="DarkMagenta"
-    $host.PrivateData.WarningBackgroundColor="DarkMagenta"
+# DarkMagenta powershell default
+function Set-ColorBlue 
+{
+    if ($host.name -eq 'ConsoleHost')
+    {
+        $host.UI.RawUI.BackgroundColor="DarkMagenta"
+        $host.UI.RawUI.ForegroundColor="White"
+        $host.PrivateData.ErrorBackgroundColor="DarkMagenta"
+        $host.PrivateData.WarningBackgroundColor="DarkMagenta"
+    }
 }
 
-function Set-ColorBlack {
-    $host.UI.RawUI.BackgroundColor="Black"
-    $host.UI.RawUI.ForegroundColor="White"
-    $host.PrivateData.ErrorBackgroundColor="Black"
-    $host.PrivateData.WarningBackgroundColor="Black"
+# git and npm insist on black
+function Set-ColorBlack 
+{
+    if ($host.name -eq 'ConsoleHost')
+    {
+        $host.UI.RawUI.BackgroundColor="Black"
+        $host.UI.RawUI.ForegroundColor="White"
+        $host.PrivateData.ErrorBackgroundColor="Black"
+        $host.PrivateData.WarningBackgroundColor="Black"
+    }
 }
 
 # Print out colors
@@ -101,6 +110,7 @@ $env:Path = $env:Path + ";C:\Program Files\Git\cmd"
 # $env:Path = $env:Path + ";C:\Program Files\MongoDB 2.6 Standard\bin"
 $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
 $env:Path = $env:Path + ";C:\sysinternals"
+$env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
 $env:Path = $env:Path + ";C:\Program Files\Sublime Text 3"
 
 #Set environment variables for Visual Studio Command Prompt (VS2013) 
@@ -119,4 +129,5 @@ popd
 #Set-Alias vi sublime_text.exe
 
 Set-ColorBlue
+
 clear
