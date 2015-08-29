@@ -8,12 +8,6 @@
 
 # Set-ExecutionPolicy RemoteSigned
 
-# DarkMagenta powershell default
-# $host.UI.RawUI.BackgroundColor="white"
-# $host.UI.RawUI.ForegroundColor="black"
-
-# $host.PrivateData.ErrorBackgroundColor = ""
-
 # output pane 
 # $psISE.Options.OutputPaneBackgroundColor = 'white' 
 # $psISE.Options.OutputPaneTextBackgroundColor = 'white' 
@@ -35,18 +29,19 @@ if ($host.name -ne 'ConsoleHost')
 }
 #>
 
-# Reset colors if they get messed up
-$OrigBgColor = $host.ui.rawui.BackgroundColor
-$OrigFgColor = $host.ui.rawui.ForegroundColor 
-
-function Reset-Colors {
-    $host.ui.rawui.BackgroundColor = $OrigBgColor
-    $host.ui.rawui.ForegroundColor = $OrigFgColor
+function Set-ColorBlue {
+    # DarkMagenta powershell default
+    $host.UI.RawUI.BackgroundColor="DarkMagenta"
+    $host.UI.RawUI.ForegroundColor="White"
+    $host.PrivateData.ErrorBackgroundColor="DarkMagenta"
+    $host.PrivateData.WarningBackgroundColor="DarkMagenta"
 }
 
-function Set-BlackWhiteColors {
-    $host.ui.rawui.BackgroundColor = "Black"
-    $host.ui.rawui.ForegroundColor = "White"
+function Set-ColorBlack {
+    $host.UI.RawUI.BackgroundColor="Black"
+    $host.UI.RawUI.ForegroundColor="White"
+    $host.PrivateData.ErrorBackgroundColor="Black"
+    $host.PrivateData.WarningBackgroundColor="Black"
 }
 
 # Print out colors
@@ -124,4 +119,5 @@ popd
 #Set-Alias npp notepad++.exe
 #Set-Alias vi sublime_text.exe
 
+Set-ColorBlue
 clear
