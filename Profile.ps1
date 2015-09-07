@@ -115,8 +115,10 @@ $env:Path = $env:Path + ";C:\Program Files\Sublime Text 3"
 
 #Set environment variables for Visual Studio Command Prompt (VS2013) 
 #Need to update the version (12.0) when new versions of VS arrive
-pushd 'c:\Program Files (x86)\Microsoft Visual Studio 12.0\VC'
-cmd /c "vcvarsall.bat&set" |
+#pushd 'c:\Program Files (x86)\Microsoft Visual Studio 12.0\VC'
+#cmd /c "vcvarsall.bat&set" |
+pushd 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools'
+cmd /c "vsvars32.bat&set" |
 foreach {
   if ($_ -match "=") {
     $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
