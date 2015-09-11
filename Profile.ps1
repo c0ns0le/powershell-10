@@ -98,6 +98,13 @@ function Load-Assembly($namespace)
     [Reflection.Assembly]::LoadWithPartialName($namespace)
 }
 
+function Out-Browser
+{
+    $p = Join-Path -Path $env:TEMP -ChildPath (([guid]::NewGuid()).ToString()+ ".html")
+    $input|ConvertTo-Html|Out-File $p
+    ii $p
+}
+
 # add paths to environment variable
 # $env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
 $env:NODE_PATH = $env:APPDATA + "\npm\node_modules"
