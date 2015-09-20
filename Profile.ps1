@@ -115,18 +115,21 @@ $env:Path = $env:Path + ";" + $env:NODE_PATH
 # $env:Path = $env:Path + ";C:\Program Files\MongoDB 2.6 Standard\bin"
 $env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
 $env:Path = $env:Path + ";C:\sysinternals"
-$env:Path = $env:Path + ";C:\Program Files\Sublime Text 2"
-$env:Path = $env:Path + ";C:\Program Files\Sublime Text 3"
 
-# setup github
+#####################################################################################
+# Github
 . (Resolve-Path "$env:LOCALAPPDATA\GitHub\shell.ps1")
 #$env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
 #$env:Path = $env:Path + ";C:\Program Files\Git\cmd"
-
-#Set environment variables for Visual Studio Command Prompt (VS2013) 
-#Need to update the version (12.0) when new versions of VS arrive
-#pushd 'c:\Program Files (x86)\Microsoft Visual Studio 12.0\VC'
-#cmd /c "vcvarsall.bat&set" |
+#####################################################################################
+# Sublime settings
+$env:SUBLIME = "C:\Program Files\Sublime Text 3"
+$env:Path = $env:Path + ";" + $env:SUBLIME
+#####################################################################################
+# Set environment variables for Visual Studio Command Prompt (VS2013) 
+# Need to update the version (12.0) when new versions of VS arrive
+# pushd 'c:\Program Files (x86)\Microsoft Visual Studio 12.0\VC'
+# cmd /c "vcvarsall.bat&set" |
 pushd 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools'
 cmd /c "vsvars32.bat&set" |
 foreach {
@@ -135,6 +138,17 @@ foreach {
   }
 }
 popd
+#####################################################################################
+# Azure SDK tools
+pushd 'C:\Program Files\Microsoft SDKs\Azure\.NET SDK\v2.7\bin'
+cmd /c "setenv.cmd&set" |
+foreach {
+  if ($_ -match "=") {
+    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+  }
+}
+popd
+#####################################################################################
 
 #Set-Alias sublime sublime_text.exe
 #Set-Alias npp notepad++.exe
