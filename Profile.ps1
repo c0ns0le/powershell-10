@@ -150,9 +150,10 @@ foreach {
 popd
 #####################################################################################
 
-#Set-Alias sublime sublime_text.exe
+#Set-Alias sublime subl.exe
 #Set-Alias npp notepad++.exe
 #Set-Alias vi sublime_text.exe
+New-Alias which get-command
 
 Set-ColorBlue
 
