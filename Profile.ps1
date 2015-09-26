@@ -123,6 +123,9 @@ $env:Path = $env:Path + ";C:\Program Files\ConEmu"
 #$env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
 #$env:Path = $env:Path + ";C:\Program Files\Git\cmd"
 #####################################################################################
+# Vim
+$env:Path = $env:Path + ";" + "C:\Program Files (x86)\Vim\vim74"
+#####################################################################################
 # Sublime settings
 $env:SUBLIME = "C:\Program Files\Sublime Text 3"
 $env:Path = $env:Path + ";" + $env:SUBLIME
