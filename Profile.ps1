@@ -153,7 +153,7 @@ foreach {
 }
 popd
 #####################################################################################
-# iis tools inetmgr, iissetup, etc
+# iis tools inetmgr, iissetup, appcmd, etc
 #%windir%\system32\inetsrv\
 
 #Set-Alias sublime subl.exe
