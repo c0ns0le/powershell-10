@@ -153,6 +153,8 @@ foreach {
 }
 popd
 #####################################################################################
+# iis tools inetmgr, iissetup, etc
+#%windir%\system32\inetsrv\
 
 #Set-Alias sublime subl.exe
 #Set-Alias npp notepad++.exe
