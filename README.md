@@ -1,3 +1,2 @@
 # Powershell
-Powershell scripts  
-This is a plain old readme file.
+[Powershell Notes](https://github.com/ericnelson1/Powershell/wiki)
