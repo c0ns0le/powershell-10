@@ -131,7 +131,7 @@ if (Test-Path $sysinternalsInstallPath)
 #####################################################################################
 # Node
 
-$nodeInstallPath = Join-Path $env:HOME "\AppData\Roaming\npm"
+$nodeInstallPath = Join-Path $HOME "\AppData\Roaming\npm"
 if (Test-Path $nodeInstallPath) 
 {
     # $env:NODE_PATH = join-path $env:HOME "\AppData\Roaming\npm\node_modules"
