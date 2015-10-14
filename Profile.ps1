@@ -23,8 +23,6 @@ function Set-ColorBlue
     }
 }
 
-Set-ColorBlue
-
 # some programs insist on black
 function Set-ColorBlack 
 {
@@ -87,46 +85,30 @@ function Out-Browser
     ii $p
 }
 
+function Add-EnvironmentPath($path)
+{
+    if (Test-Path $path) 
+    {
+        $env:Path = $env:Path + ";" + $path
+    }
+}
+
 #####################################################################################
 # add paths to environment variable
 
-$vimInstallPath = "C:\Program Files (x86)\Vim\vim74"
-if (Test-Path $vimInstallPath) 
-{
-    $env:Path = $env:Path + ";" + $vimInstallPath
-}
-
-$notepadppInstallPath = "C:\Program Files (x86)\Notepad++"
-if (Test-Path $notepadppInstallPath) 
-{
-    $env:Path = $env:Path + ";" + $notepadppInstallPath
-}
+Add-EnvironmentPath("C:\Program Files (x86)\Vim\vim74")
+Add-EnvironmentPath("C:\Program Files (x86)\Notepad++")
+Add-EnvironmentPath("C:\Program Files (x86)\WinMerge")
+Add-EnvironmentPath("C:\Program Files\MongoDB 2.6 Standard\bin")
+Add-EnvironmentPath("C:\sysinternals")
+Add-EnvironmentPath("C:\Program Files\Sublime Text 3")
 
 $sublimeInstallPath = "C:\Program Files\Sublime Text 3"
 if (Test-Path $sublimeInstallPath) 
 {
     $env:SUBLIME = $sublimeInstallPath
-    $env:Path = $env:Path + ";" + $env:SUBLIME
-    #Set-Alias sublime sublime_text.exe
 }
-
-$winmergeInstallPath = "C:\Program Files (x86)\WinMerge"
-if (Test-Path $winmergeInstallPath) 
-{
-    $env:Path = $env:Path + ";" + $winmergeInstallPath
-}
-
-$mongoInstallPath = "C:\Program Files\MongoDB 2.6 Standard\bin"
-if (Test-Path $mongoInstallPath) 
-{
-    $env:Path = $env:Path + ";" + $mongoInstallPath
-}
-
-$sysinternalsInstallPath = "C:\sysinternals"
-if (Test-Path $sysinternalsInstallPath) 
-{
-    $env:Path = $env:Path + ";" + $sysinternalsInstallPath
-}
+Remove-Variable $sublimeInstallPath
 
 #####################################################################################
 # Node
@@ -140,6 +122,7 @@ if (Test-Path $nodeInstallPath)
     $env:Path = $env:Path + ";" + $env:NODE_PATH
     $env:Path = $env:Path + ";" + $nodeInstallPath
 }
+Remove-Variable $nodeInstallPath
 
 #####################################################################################
 # Github for windows shell environment
@@ -151,6 +134,7 @@ if (Test-Path $gitInstallPath)
     #$env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
     #$env:Path = $env:Path + ";C:\Program Files\Git\cmd"
 }
+Remove-Variable $gitInstallPath
 
 #####################################################################################
 # Set environment variables for Visual Studio Command Prompt (VS2013) 
@@ -170,6 +154,7 @@ if (Test-Path (Join-Path $vsInstallPath "vsvars32.bat&set"))
     }
     popd
 }
+Remove-Variable $vsInstallPath
 
 #####################################################################################
 # Azure SDK tools
@@ -186,6 +171,6 @@ if (Test-Path $azureInstallPath)
     }
     popd
 }
+Remove-Variable $azureInstallPath
 
 #####################################################################################
-
