@@ -108,7 +108,7 @@ if (Test-Path $sublimeInstallPath)
 {
     $env:SUBLIME = $sublimeInstallPath
 }
-Remove-Variable $sublimeInstallPath
+Remove-Variable sublimeInstallPath
 
 #####################################################################################
 # Node
@@ -122,7 +122,7 @@ if (Test-Path $nodeInstallPath)
     $env:Path = $env:Path + ";" + $env:NODE_PATH
     $env:Path = $env:Path + ";" + $nodeInstallPath
 }
-Remove-Variable $nodeInstallPath
+Remove-Variable nodeInstallPath
 
 #####################################################################################
 # Github for windows shell environment
@@ -134,7 +134,7 @@ if (Test-Path $gitInstallPath)
     #$env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
     #$env:Path = $env:Path + ";C:\Program Files\Git\cmd"
 }
-Remove-Variable $gitInstallPath
+Remove-Variable gitInstallPath
 
 #####################################################################################
 # Set environment variables for Visual Studio Command Prompt (VS2013) 
@@ -154,7 +154,7 @@ if (Test-Path (Join-Path $vsInstallPath "vsvars32.bat&set"))
     }
     popd
 }
-Remove-Variable $vsInstallPath
+Remove-Variable vsInstallPath
 
 #####################################################################################
 # Azure SDK tools
@@ -171,6 +171,6 @@ if (Test-Path $azureInstallPath)
     }
     popd
 }
-Remove-Variable $azureInstallPath
+Remove-Variable azureInstallPath
 
 #####################################################################################
