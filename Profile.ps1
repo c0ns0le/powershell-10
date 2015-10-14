@@ -4,30 +4,12 @@
 # Test-path $profile
 # New-item –type file –force $profile
 # ise $profile
-# reload profile . $profile
+# . $profile
 
 # Set-ExecutionPolicy RemoteSigned
 
-# output pane 
-# $psISE.Options.OutputPaneBackgroundColor = 'white' 
-# $psISE.Options.OutputPaneTextBackgroundColor = 'white' 
-# $psISE.Options.OutputPaneForegroundColor = 'black' 
-
-# command pane 
-# $psISE.Options.CommandPaneBackgroundColor = 'white' 
-# $psise.Options.CommandPaneForegroundColor = 'black'
-
-# copy script panel token colors to console panel token colors (only in ISE)
-<# 
-if ($host.name -ne 'ConsoleHost')
-{
-    foreach ($pair in $psISE.Options.TokenColors)
-    {
-       $psISE.Options.ConsoleTokenColors.Item($pair.Key) = `
-           $psISE.Options.TokenColors.Item($pair.Key) 
-    }
-}
-#>
+#####################################################################################
+# Functions
 
 # DarkMagenta powershell default
 function Set-ColorBlue 
@@ -41,7 +23,9 @@ function Set-ColorBlue
     }
 }
 
-# git and npm insist on black
+Set-ColorBlue
+
+# some programs insist on black
 function Set-ColorBlack 
 {
     if ($host.name -eq 'ConsoleHost')
@@ -53,7 +37,7 @@ function Set-ColorBlack
     }
 }
 
-# Print out colors
+# print out colors
 function Show-Colors()
 {
     [enum]::GetValues([System.ConsoleColor]) | Foreach-Object {Write-Host $_ -ForegroundColor $_} 
@@ -71,6 +55,7 @@ function Get-PathPerLine()
 {
     $env:Path.Split(";")
 }
+
 Set-Alias path Get-PathPerLine
 
 # alias reverse lookup
@@ -82,13 +67,9 @@ function Lookup-Alias($cmd)
 # replace with type accelerator module
 [System.Type]$typeAcceleratorsType =
 [System.Management.Automation.PSObject].Assembly.GetType(
-'System.Management.Automation.TypeAccelerators',
-$true,
-$true
-)
+'System.Management.Automation.TypeAccelerators', $true, $true)
 
-# replace with type accelerator module
-function get-typeaccelerators()
+function Get-TypeAccelerators()
 {
     $typeAcceleratorsType::get
 }
@@ -98,69 +79,113 @@ function Load-Assembly($namespace)
     [Reflection.Assembly]::LoadWithPartialName($namespace)
 }
 
+# send output to a browser
 function Out-Browser
 {
-    $p = Join-Path -Path $env:TEMP -ChildPath (([guid]::NewGuid()).ToString()+ ".html")
+    $p = Join-Path -Path $env:TEMP -ChildPath (([guid]::NewGuid()).ToString() + ".html")
     $input|ConvertTo-Html|Out-File $p
     ii $p
 }
 
+#####################################################################################
 # add paths to environment variable
-# $env:NODE_PATH = "C:\Users\Eric\AppData\Roaming\npm\node_modules"
-$env:NODE_PATH = $env:APPDATA + "\npm\node_modules"
-# $env:Path = $env:Path + ";C:\Program Files\nodejs"
-$env:Path = $env:Path + ";" + $env:NODE_PATH
-# $env:Path = $env:Path + ";C:\Program Files (x86)\Notepad++"
-# $env:Path = $env:Path + ";C:\Program Files (x86)\WinMerge"
-# $env:Path = $env:Path + ";C:\Program Files\MongoDB 2.6 Standard\bin"
-$env:Path = $env:Path + ";C:\Users\Eric\AppData\Roaming\npm"
-$env:Path = $env:Path + ";C:\sysinternals"
-$env:Path = $env:Path + ";C:\Program Files\ConEmu"
+
+$vimInstallPath = "C:\Program Files (x86)\Vim\vim74"
+if (Test-Path $vimInstallPath) 
+{
+    $env:Path = $env:Path + ";" + $vimInstallPath
+}
+
+$notepadppInstallPath = "C:\Program Files (x86)\Notepad++"
+if (Test-Path $notepadppInstallPath) 
+{
+    $env:Path = $env:Path + ";" + $notepadppInstallPath
+}
+
+$sublimeInstallPath = "C:\Program Files\Sublime Text 3"
+if (Test-Path $sublimeInstallPath) 
+{
+    $env:SUBLIME = $sublimeInstallPath
+    $env:Path = $env:Path + ";" + $env:SUBLIME
+    #Set-Alias sublime sublime_text.exe
+}
+
+$winmergeInstallPath = "C:\Program Files (x86)\WinMerge"
+if (Test-Path $winmergeInstallPath) 
+{
+    $env:Path = $env:Path + ";" + $winmergeInstallPath
+}
+
+$mongoInstallPath = "C:\Program Files\MongoDB 2.6 Standard\bin"
+if (Test-Path $mongoInstallPath) 
+{
+    $env:Path = $env:Path + ";" + $mongoInstallPath
+}
+
+$sysinternalsInstallPath = "C:\sysinternals"
+if (Test-Path $sysinternalsInstallPath) 
+{
+    $env:Path = $env:Path + ";" + $sysinternalsInstallPath
+}
 
 #####################################################################################
-# Github
-. (Resolve-Path "$env:LOCALAPPDATA\GitHub\shell.ps1")
-#$env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
-#$env:Path = $env:Path + ";C:\Program Files\Git\cmd"
+# Node
+
+$nodeInstallPath = Join-Path $env:HOME "\AppData\Roaming\npm"
+if (Test-Path $nodeInstallPath) 
+{
+    # $env:NODE_PATH = join-path $env:HOME "\AppData\Roaming\npm\node_modules"
+    $env:NODE_PATH = $env:APPDATA + "\npm\node_modules"
+    # $env:Path = $env:Path + ";C:\Program Files\nodejs"
+    $env:Path = $env:Path + ";" + $env:NODE_PATH
+    $env:Path = $env:Path + ";" + $nodeInstallPath
+}
+
 #####################################################################################
-# Vim
-$env:Path = $env:Path + ";" + "C:\Program Files (x86)\Vim\vim74"
-#####################################################################################
-# Sublime settings
-$env:SUBLIME = "C:\Program Files\Sublime Text 3"
-$env:Path = $env:Path + ";" + $env:SUBLIME
+# Github for windows shell environment
+
+$gitInstallPath = "$env:LOCALAPPDATA\GitHub\shell.ps1"
+if (Test-Path $gitInstallPath) 
+{
+    . (Resolve-Path $gitInstallPath)
+    #$env:Path = $env:Path + ";C:\Program Files (x86)\Git\bin"
+    #$env:Path = $env:Path + ";C:\Program Files\Git\cmd"
+}
+
 #####################################################################################
 # Set environment variables for Visual Studio Command Prompt (VS2013) 
 # Need to update the version (12.0) when new versions of VS arrive
 # pushd 'c:\Program Files (x86)\Microsoft Visual Studio 12.0\VC'
 # cmd /c "vcvarsall.bat&set" |
-pushd 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools'
-cmd /c "vsvars32.bat&set" |
-foreach {
-  if ($_ -match "=") {
-    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
-  }
+
+$vsInstallPath = 'C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools'
+if (Test-Path (Join-Path $vsInstallPath "vsvars32.bat&set"))
+{
+    pushd $vsInstallPath
+    cmd /c "vsvars32.bat&set" |
+    foreach {
+      if ($_ -match "=") {
+        $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+      }
+    }
+    popd
 }
-popd
+
 #####################################################################################
 # Azure SDK tools
-pushd 'C:\Program Files\Microsoft SDKs\Azure\.NET SDK\v2.7\bin'
-cmd /c "setenv.cmd&set" |
-foreach {
-  if ($_ -match "=") {
-    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
-  }
+
+$azureInstallPath = 'C:\Program Files\Microsoft SDKs\Azure\.NET SDK\v2.7\bin'
+if (Test-Path $azureInstallPath) 
+{
+    pushd $azureInstallPath
+    cmd /c "setenv.cmd&set" |
+    foreach {
+      if ($_ -match "=") {
+        $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+      }
+    }
+    popd
 }
-popd
+
 #####################################################################################
-# iis tools inetmgr, iissetup, appcmd, etc
-#%windir%\system32\inetsrv\
 
-#Set-Alias sublime subl.exe
-#Set-Alias npp notepad++.exe
-#Set-Alias vi sublime_text.exe
-New-Alias which get-command
-
-Set-ColorBlue
-
-clear
