@@ -98,7 +98,7 @@ function Out-More
 {
     param
     (
-        $Lines = 10,
+        $Lines = 50,
         
         [Parameter(ValueFromPipeline=$true)]
         $InputObject
