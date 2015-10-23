@@ -205,6 +205,6 @@ Remove-Variable azureInstallPath
 #####################################################################################
 if ($host.name -eq 'ConsoleHost')
 {
-    [console]::WindowWidth=225
+    [console]::WindowWidth=224
     [console]::WindowHeight=68
 }
