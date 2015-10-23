@@ -203,3 +203,4 @@ if (Test-Path $azureInstallPath)
 Remove-Variable azureInstallPath
 
 #####################################################################################
+[console]::WindowWidth=225
