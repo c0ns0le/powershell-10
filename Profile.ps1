@@ -93,6 +93,35 @@ function Add-EnvironmentPath($path)
     }
 }
 
+# more doesnt work in ise
+function Out-More
+{
+    param
+    (
+        $Lines = 10,
+        
+        [Parameter(ValueFromPipeline=$true)]
+        $InputObject
+    )
+    
+    begin
+    {
+        $counter = 0
+    }
+    
+    process
+    {
+        $counter++
+        if ($counter -ge $Lines)
+        {
+            $counter = 0
+            Write-Host 'Press ENTER to continue' -ForegroundColor Yellow
+            Read-Host  
+        }
+        $InputObject
+    }
+} 
+
 #####################################################################################
 # add paths to environment variable
 
