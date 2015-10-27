@@ -142,7 +142,7 @@ Remove-Variable sublimeInstallPath
 #####################################################################################
 # Node
 
-$nodeInstallPath = Join-Path $HOMEPATH "\AppData\Roaming\npm"
+$nodeInstallPath = Join-Path $HOME "\AppData\Roaming\npm"
 if (Test-Path $nodeInstallPath) 
 {
     # $env:NODE_PATH = join-path $env:HOME "\AppData\Roaming\npm\node_modules"
