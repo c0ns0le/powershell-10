@@ -1,4 +1,4 @@
-#### Powershell
+#### Key Commands
 * user mode: window key > powershell
 * admin mode: window key > powershell ctrl+shft+enter
 * explorer to powershell: alt D > powershell
