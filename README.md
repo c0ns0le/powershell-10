@@ -47,7 +47,20 @@ Comment block. Must be separate line.
 ```
 
 #### Modules
-Module repositories: [Microsoft Script Center](https://technet.microsoft.com/en-us/scriptcenter/default), [PoshCode](http://poshcode.org/), codeplex, github, nuget, [PsGet](http://psget.net/)
+Module repositories: 
+* [Microsoft Script Center](https://technet.microsoft.com/en-us/scriptcenter/default)
+* [PoshCode](http://poshcode.org/)
+* codeplex
+* github
+* nuget
+* [PsGet](http://psget.net/)
 
-[Popular modules:](http://social.technet.microsoft.com/wiki/contents/articles/4308.popular-powershell-modules.aspx) [Azure Powershell](https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/), [SQL Powershell Extensions](http://sqlpsx.codeplex.com/), [Powershell Community Extensions PSCX](http://pscx.codeplex.com/), [OData Powershell Explorer](http://psodata.codeplex.com/), [Powershell ISE Pack](http://powershellise.com/)
+[Popular modules:](http://social.technet.microsoft.com/wiki/contents/articles/4308.popular-powershell-modules.aspx) 
+* [Azure Powershell](https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/)
+* [SQL Powershell Extensions](http://sqlpsx.codeplex.com/)
+* [Powershell Community Extensions PSCX](http://pscx.codeplex.com/)
+* [OData Powershell Explorer](http://psodata.codeplex.com/)
+* [Powershell ISE Pack](http://powershellise.com/)
+
+
 
