@@ -40,12 +40,6 @@
 * when visual studio opens a solution file, it automatically runs the psm1 file.
 * add entries to visual studio menus
 
-```
-<#  
-Comment block. Must be separate line.  
-#>
-```
-
 #### Modules
 Module repositories: 
 * [Microsoft Script Center](https://technet.microsoft.com/en-us/scriptcenter/default)
