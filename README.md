@@ -22,7 +22,7 @@
 * ctrl+D - goto console
 * ctrl+I - goto script
 
-#### Four types of commands
+#### Types of commands
 * _cmdlets_ - Implemented by a .NET class that derives from the Cmdlet base class in the PowerShell SDK.  Cmdlets are compiled into a DLL and loaded into the PowerShell process.  Verb-Noun form.
 * _shell function commands_ - function Do-Something { }
 * _script commands_ - code in a file with ps1 extension
@@ -40,8 +40,16 @@
 * when visual studio opens a solution file, it automatically runs the psm1 file.
 * add entries to visual studio menus
 
-#### Modules
-Module repositories: 
+#### Websites
+* [Powershell.com](http://powershell.com)
+* [Mad With Powershell](http://www.madwithpowershell.com)
+* [Owners Manual Technet](https://technet.microsoft.com/en-us/library/ee221100.aspx)
+* [Learning Powershell Msdn](https://msdn.microsoft.com/en-us/library/cc281945.aspx)
+* [Get Powershell Blog](http://get-powershell.com)
+* [Master Powershell Tutorial](http://powershell.com/cs/blogs/ebookv2/default.aspx)
+* [Hey Scripting Guy](https://blogs.technet.microsoft.com/heyscriptingguy)
+
+#### Module Repositories 
 * [Microsoft Script Center](https://technet.microsoft.com/en-us/scriptcenter/default)
 * [PoshCode](http://poshcode.org/)
 * codeplex
@@ -49,7 +57,8 @@ Module repositories:
 * nuget
 * [PsGet](http://psget.net/)
 
-[Popular modules:](http://social.technet.microsoft.com/wiki/contents/articles/4308.popular-powershell-modules.aspx) 
+#### Modules
+* [Popular Modules](http://social.technet.microsoft.com/wiki/contents/articles/4308.popular-powershell-modules.aspx) 
 * [Azure Powershell](https://azure.microsoft.com/en-us/documentation/articles/powershell-install-configure/)
 * [SQL Powershell Extensions](http://sqlpsx.codeplex.com/)
 * [Powershell Community Extensions PSCX](http://pscx.codeplex.com/)
