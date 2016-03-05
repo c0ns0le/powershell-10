@@ -22,16 +22,19 @@ for ($i=0;$i -lt 10; $i++) {}  # use foreach($i in 0..9) instead
 $array = 11,12,13
 foreach ($item in $array) { $item }
 
+foreach ($n in 1,2,3) { $n * 5 }
+
 foreach-Object (foreach alias)
 foreach ($file in get-childitem) { $file.Name }
 
-1..5|%{$_*$_}  # percent % is short for foreach
+$squares = 1..5|%{$_*$_}  # percent % is short for foreach
 
 # Do something 10 times:
 
 foreach ($i in 1..10) { }
 foreach ($i in 10..1) { }
 foreach ($i in 0..($Files.Count-1)) { }
-Foreach can run parallel tasks (creates separate threads) and you can throttle thread count if necessary:
+
+# Foreach can run parallel tasks (creates separate threads) and you can throttle thread count if necessary:
 
 foreach -parallel -ThrottleLimit 50 ($Report in $Reports) { Process-Report $Report }

@@ -1,6 +1,7 @@
 ﻿# Array
 
 $array = 1,2,3,4
+$array = (1,2,3,4)
 $array = "bill", "george"
 $array[0] = "jill"
 $array = @() # empty array

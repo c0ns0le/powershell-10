@@ -2,7 +2,7 @@ ConvertFrom-Csv
 ConvertTo-Csv
 
 # output data to excel csv file
-ps | export-csv services.csv
+Get-Process | Export-Csv services.csv
 
 # import data from excel csv file
 $header = "ColumnOne", "ColumnTwo"
@@ -10,9 +10,9 @@ $mycsv = import-csv "my.csv" -header $header
 $mycsv.Count
 
 # output data to html file
-ps = get-process
-ps | convertto-html > ps.html
+Get-Process | ConvertTo-Html > ps.html
 ii ps.html
+start ps.html
 
 ConvertTo-Xml
 
@@ -27,3 +27,9 @@ $xml | out-file "myfile.xml"
 
 # pretty print xml (pscx module) 
 'Debug ' | Format-Xml
+
+# transform text output from a program into first-class objects 
+# basic idea is to turn the text into a csv file and then convert the csv into objects 
+myprogramwithtextoutput | foreach {$_ -replace "\s+",','} | ConvertFrom-Csv -Header Col1,Col2
+
+
