@@ -28,6 +28,13 @@ $xml | out-file "myfile.xml"
 # pretty print xml (pscx module) 
 'Debug ' | Format-Xml
 
+# parse an xml string
+$s = '<customer name="larry">smith</customer>'
+$x = [xml]$s
+$x.customer
+$x.customer.name
+$x.customer.'#text'
+
 # transform text output from a program into first-class objects 
 # basic idea is to turn the text into a csv file and then convert the csv into objects 
 myprogramwithtextoutput | foreach {$_ -replace "\s+",','} | ConvertFrom-Csv -Header Col1,Col2
