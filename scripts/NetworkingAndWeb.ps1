@@ -30,6 +30,17 @@ $x = [xml]$webservice.GetCitiesByCountry("Spain")
 $x.NewDataSet.Table
 
 
+http://www.webservicex.net/geoipservice.asmx?WSDL 
+http://www.webservicex.net/WS/WSDetails.aspx?WSID=64&CATID=12 
+
+$uri = 'http://www.webservicex.com/stockquote.asmx?WSDL'
+$uri = 'http://www.webservicex.net/RealTimeMarketData.asmx?WSDL'
+$webservice = New-WebServiceProxy -Uri $uri
+$webservice|Get-Member
+
+
+Invoke-WebRequest 'http://www.webservicex.net/RealTimeMarketData.asmx/Quote?Symbol="GOOG"'
+
 
 
 
