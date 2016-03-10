@@ -17,6 +17,7 @@ new-webserviceproxy # use to talk to web services
 
 # get zipcodes from web service 
 $webservice = New-WebServiceProxy -Uri 'http://www.webservicex.net/uszip.asmx?WSDL' 
+$webservice | get-member
 $webservice.GetInfoByCity('New York').Table 
 $webservice.GetInfoByZIP('10286').Table
 
