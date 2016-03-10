@@ -17,10 +17,10 @@ ise $profile # edit profile
 # list all 4 profile scripts 
 $profile | select *
 
-Execution policy
+# Execution policy
 
-get-executionpolicy
-set-executionpolicy remotesigned # run all local scripts and only remote scripts signed by a trusted source
+Get-ExecutionPolicy
+Set-ExecutionPolicy remotesigned # run all local scripts and only remote scripts signed by a trusted source
 
 # Powershell version
 
@@ -59,21 +59,21 @@ ii . # opens the current directory in windows explorer
 select -expand xyz
 
 # to output results to the clipboard, pipe results to clip 
-ps | clip
+Get-Process | clip
 
 # output grid view 
-out-gridview ogv ls | ogv # pops up a grid view dialog box
+Get-Process | Out-GridView # pops up a grid view dialog box
 
-h # shows your history
+Get-History # shows your history
 
 # Providers
 
 # Providers are things we can navigate and get data from
 
-get-psprovider # shows list of providers available
+Get-PSProvider # shows list of providers available
 # filesystem drives, registry, certificates, environment vars, sql server object tree
 
-get-psdrive # lists drives available on system
+Get-PSDrive # lists drives available on system
 
 cd env: # changes the provider to environment variables
 ls # list the environment variables

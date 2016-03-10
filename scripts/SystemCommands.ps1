@@ -1,3 +1,10 @@
+# To run a command
+
+program.exe   # run normal if program is in your path
+"c:\program files\program.exe"  # paths with spaces require quotes, but this just prints a string
+& "c:\program files\program.exe" arguments # use ampersand invoke operator to execute it
+.\program.exe arguments  # if program in current directory
+
 # Events
 
 Register-ObjectEvent 
@@ -20,10 +27,12 @@ get-process chrome | stop-process # much better way to kill set of processes
 get-process | where {$_.ProcessName -eq "powershell"} 
 ps powershell
 
+# get a process and kill it
+$p = get-process notepad
+$p.kill()
+
 # Services
 get-service
-
-
 
 
 
@@ -65,10 +74,12 @@ Get-WmiObject win32_operatingsystem
 Get-WmiObject win32_process   # list of processes
 Get-WmiObject win32_service   # list of services
 Get-WmiObject win32_useraccount
+Get-WmiObject win32_processor
+
+Get-CimInstance win32_processor
 
 
-
-
+Get-History
 
 
 
