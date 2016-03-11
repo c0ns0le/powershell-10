@@ -11,6 +11,15 @@ Format-List *  # shows all properties
 
 ls | Out-GridView # ogv. pops up a grid view dialog box
 
+# select items on the output grid view and save them in a variable
+$selectedProcesses = Get-Process | Out-GridView -PassThru 
+$selectedProcesses
+
+
+# select single item on output grid view
+$selectedProcesses = Get-Process | Out-GridView -OutputMode Single
+$selectedProcesses
+
 # Powershell equivalent to String.Format
 "{0}, your balance is {1}. (Status {2})" -f $name, $balance, $status
 

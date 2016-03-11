@@ -20,6 +20,11 @@ ls -Force # ls -al equivalent, show all files plus hidden files
 
 new-item myfile.txt # same as touch command
 
+# create a temp file
+$tempFileName = [System.IO.Path]::GetTempFileName()
+$someText = "Put some text in the temp file"
+$someText > $tempFileName
+
 remove-item (rm)
 rm -Recurse -Force some_dir # delete subtree
 
@@ -71,3 +76,19 @@ finally {
         $outputFile.Close()
     } 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

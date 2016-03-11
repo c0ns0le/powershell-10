@@ -95,3 +95,21 @@ square(5)  or square 5   # can invoke with or without parens
 
 # Then you can type: help My-Function and it will display this information
 
+function MyFunction 
+{
+
+## PowerShell runs your "begin" script block before it passes you any of the items in the pipeline.
+begin
+{
+}
+## PowerShell runs your "process" script block for each item it passes down
+## the pipeline. In this block, the "$_" variable represents the current pipeline object
+process
+{
+}
+## PowerShell runs your "end" script block once it completes passing all objects down the pipeline.
+end
+{
+}
+
+}
