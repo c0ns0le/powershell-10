@@ -101,7 +101,9 @@ function square($x) {$x*$x}
 square(5)  or square 5   # can invoke with or without parens
 
 # Create a help page for functions
-# Get-Help My-Function  will display help information
+# Get-Help My-Function  basic help information
+# Get-Help My-Function -Examples
+# Get-Help My-Function -Parameter *
 
 <#
 .SYNOPSIS
