@@ -32,6 +32,18 @@ param ([int]$i) # explicit typing will throw error if wrong type is passed
 
 param([switch]$verbose, [switch]$debug, [switch]$mycustom) 
 
+# enable the command to accept input values from pipeline
+function My-Function 
+{
+    param(
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [int]
+        $myint
+    )
+    $myint * 2
+}
+1..10 | My-Function
+
 # verbose and debug are built-in, you can create your own custom
 # use process command to pipeline enable a block
 
@@ -89,11 +101,14 @@ function square($x) {$x*$x}
 square(5)  or square 5   # can invoke with or without parens
 
 # Create a help page for functions
+# Get-Help My-Function  will display help information
+
+<#
 .SYNOPSIS
 .DESCRIPTION
-.PARAMETER ... etc
-
-# Then you can type: help My-Function and it will display this information
+.PARAMETER
+.EXAMPLE
+#>
 
 function MyFunction 
 {
