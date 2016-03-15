@@ -32,17 +32,7 @@ param ([int]$i) # explicit typing will throw error if wrong type is passed
 
 param([switch]$verbose, [switch]$debug, [switch]$mycustom) 
 
-# enable the command to accept input values from pipeline
-function My-Function 
-{
-    param(
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
-        [int]
-        $myint
-    )
-    $myint * 2
-}
-1..10 | My-Function
+
 
 # verbose and debug are built-in, you can create your own custom
 # use process command to pipeline enable a block
@@ -76,6 +66,10 @@ $private:unmentionables = 7
 {$private} # cant see it. its null
 
 # Functions
+
+# powershell has predefined functions. to list them:
+ls function:
+# prompt is a function that prints out your command prompt
 
 # Functions are script blocks with a name
 
@@ -111,6 +105,19 @@ square(5)  or square 5   # can invoke with or without parens
 .PARAMETER
 .EXAMPLE
 #>
+
+# enable the command to accept input values from pipeline
+function My-Function 
+{
+    param(
+        [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
+        [int]
+        $myint
+    )
+    $myint * 2
+}
+1..10 | My-Function  
+# this will only process the last element.  you need to use process {} block in your function see below
 
 function MyFunction 
 {
