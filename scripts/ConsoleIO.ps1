@@ -3,6 +3,9 @@ read-host -prompt "Enter something"
 out-host
 write-host
 
+# more command
+out-more
+
 # Formatting should only be used at the end of a pipeline
 # Formatting output: format-wide -column 4 # 4 columns. fw
 Format-Table -autosize -wrap
