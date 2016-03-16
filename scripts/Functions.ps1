@@ -42,7 +42,7 @@ param ([int]$i) # explicit typing will throw error if wrong type is passed
 
 param([switch]$verbose, [switch]$debug, [switch]$mycustom) 
 
-
+# you can add param() to pass variables to scripts
 
 # verbose and debug are built-in, you can create your own custom
 # use process command to pipeline enable a block
