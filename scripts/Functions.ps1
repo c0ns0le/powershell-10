@@ -147,3 +147,5 @@ end
 }
 
 }
+
+# scopes - script, global, private
