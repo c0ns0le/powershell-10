@@ -1,8 +1,11 @@
 # Profile
 
 Test-path $profile
-New-item –type file –force $profile
+New-item â€“type file â€“force $profile
 ise $profile
+
+# returns the path to the script file that runs with all PowerShell hosts, console and ISE
+$profile.CurrentUserAllHosts 
 
 # path to user-specific profile
 # you need to create the file yourself
