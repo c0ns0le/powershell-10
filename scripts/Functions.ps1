@@ -6,11 +6,14 @@ $myscriptblock = { ls; "hello"; } # doesnt run yet
 & $myscriptblock  # execute the script block
 
 & myscriptfile.ps1
-# the & tells powershell to run in isolation mode
+# & tells powershell to run in isolation mode
 # the script runs in its own scope and all variables and functions defined in the script will be discarded when the script is done
+# use this to run a script to perform some task and not pollute the environment
 
 . myscriptfile.ps1 
-# dot-sourcing runs in global scope.  functions and variables remain in global scope after script is done
+# dot-sourcing runs in global scope
+# functions and variables remain in global scope after script is done
+# use this to import a function library into your global scope
 
 $value = {12+23}
 1 + (&$value)  # must wrap in parenthesis to use value
