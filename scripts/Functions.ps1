@@ -5,6 +5,9 @@
 $myscriptblock = { ls; "hello"; } # doesnt run yet  
 & $myscriptblock  # execute the script block
 
+# the & tells powershell to run in isolation mode
+# the script runs in its own scope and all variables and functions defined in the script will be discarded
+
 $value = {12+23}
 1 + (&$value)  # must wrap in parenthesis to use value
 
