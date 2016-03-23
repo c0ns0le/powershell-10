@@ -16,23 +16,23 @@ Get-EventSubscriber
 
 # Processes 
 
-get-process # ps alias 
-get-process chrome # get by name 
+Get-Process # ps alias 
+Get-Process chrome # get by name 
 ps | sort cpu -desc | select -first 10 # top 10 cpu processes 
-stop-process # kill alias kill a process 
-(ps|where name -eq chrome).kill() # kill a set of processes 
-get-process chrome | stop-process # much better way to kill set of processes
+Stop-Process # kill alias kill a process 
+(Get-Process|where name -eq chrome).kill() # kill a set of processes 
+Get-Process chrome | Stop-Process # much better way to kill set of processes
 
-# get all powershell processes on the system 
-get-process | where {$_.ProcessName -eq "powershell"} 
-ps powershell
+[System.Diagnostics.Process]::GetProcessById(0)
 
 # get a process and kill it
-$p = get-process notepad
+
+$p = Get-Process notepad
 $p.kill()
 
 # Services
-get-service
+
+Get-Service
 
 
 

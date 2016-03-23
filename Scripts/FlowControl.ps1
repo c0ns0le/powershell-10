@@ -28,11 +28,12 @@ foreach-Object (foreach alias)
 foreach ($file in get-childitem) { $file.Name }
 
 $squares = 1..5|%{$_*$_}  # percent % is short for foreach
+1..10 | % {$_*2}
 
 # Do something 10 times:
 
 foreach ($i in 1..10) { }
-foreach ($i in 10..1) { }
+foreach ($i in 10..1) { } # reverse
 foreach ($i in 0..($Files.Count-1)) { }
 
 # Foreach can run parallel tasks (creates separate threads) and you can throttle thread count if necessary:

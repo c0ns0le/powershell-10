@@ -41,6 +41,30 @@ $webservice|Get-Member
 
 Invoke-WebRequest 'http://www.webservicex.net/RealTimeMarketData.asmx/Quote?Symbol="GOOG"'
 
+# System.Uri
 
+[uri]::CheckHostName('www.yahoo.com')
+[UriHostNameType]|Get-Member -Static -MemberType Properties
 
+$uri = new-object System.Uri -ArgumentList 'http://www.google.com/my/path?query=hello'
+$uri.Scheme
+$uri.Host
+$uri.AbsolutePath
+$uri.Query
+
+# System.Net.NetworkCredential
+# Provides credentials for password-based authentication schemes such as 
+# basic, digest, Kerberos authentication, and NTLM.
+
+# System.Net.Dns
+[net.dns] | Get-Member -Static
+[net.dns]::GetHostByName("www.google.com")
+[net.dns]::Resolve("www.google.com")
+[net.dns]::GetHostByAddress("127.0.0.1")
+
+# System.DirectoryServices.DirectorySearcher
+# Performs queries against Active Directory.
+
+# System.DirectoryServices.DirectoryEntry
+# The DirectoryEntry class encapsulates a node or object in the Active Directory hierarchy.
 

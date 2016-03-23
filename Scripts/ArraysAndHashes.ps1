@@ -12,6 +12,11 @@ $array = 10..1 # backwards
 $array = 1..($count) # use variable
 $array -contains 42 # false
 
+$array = 1..10
+[array]::Reverse($array)
+[array]::Sort($array)
+$array
+
 # use list for large sets 
 
 $array = New-Object System.Collections.Generic.List[int]

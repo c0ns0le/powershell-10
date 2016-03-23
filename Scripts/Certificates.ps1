@@ -24,3 +24,22 @@ Add-Type -AssemblyName System.Security
 $cert = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
 $cert.Import($PathToPfxFile, $PFXPassword, 'Exportable')
 $cert
+
+
+# System.Security.SecureString
+# Security.Cryptography.SHA1
+# System.Security.Principal.WindowsPrincipal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
