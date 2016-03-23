@@ -5,7 +5,8 @@ $r.Content
 # pass bearer token
 $url = 'http://www.somewhere.com'
 $token = 'Bearer asdf8765asf7685asdf'
-Invoke-WebRequest $url -Headers @{ 'Authorization'=$token }
+$res = Invoke-WebRequest $url -Headers @{ 'Authorization'=$token }
+$res.Content | clip
 
 # invoke a rest method (alias irm) 
 Invoke-RestMethod http://website.com/service.aspx
